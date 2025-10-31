@@ -36,6 +36,13 @@ export const GalleryIcon: React.FC<{ className?: string }> = ({ className }) => 
     </svg>
 );
 
+// FIX: Add AnalystIcon for use in ProAnalyst component.
+export const AnalystIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+    </svg>
+);
+
 // FIX: Add ChatIcon for use in Chatbot component
 export const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -52,13 +59,6 @@ export const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
 export const SparklesIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
         <path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.321l5.478.399a.562.562 0 0 1 .313.952l-4.224 3.622a.563.563 0 0 0-.162.522l1.285 5.328a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0l-4.725 2.885a.562.562 0 0 1-.84-.61l1.285-5.328a.562.562 0 0 0-.162-.522L1.172 10.28a.562.562 0 0 1 .313-.952l5.478-.399a.563.563 0 0 0 .475-.321L11.48 3.5Z" />
-    </svg>
-);
-
-export const AnalystIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 100 15 7.5 7.5 0 000-15zM21 21l-5.197-5.197" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 7.5v3.75m0 0H15m-3.75 0H7.5" />
     </svg>
 );
 

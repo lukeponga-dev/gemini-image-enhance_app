@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mode } from './Sidebar';
-import { RemoveIcon, StyleIcon, AnalystIcon } from './Icons';
+import { RemoveIcon, StyleIcon } from './Icons';
 
 const tools: { id: Mode; label: string; description: string; icon: React.FC<{ className?: string }> }[] = [
     {
@@ -15,12 +15,6 @@ const tools: { id: Mode; label: string; description: string; icon: React.FC<{ cl
         description: 'Combine the style of two images',
         icon: StyleIcon
     },
-    {
-        id: 'analyst',
-        label: 'Pro Analyst',
-        description: 'Tackle complex problems with AI',
-        icon: AnalystIcon
-    }
 ];
 
 interface ToolsProps {

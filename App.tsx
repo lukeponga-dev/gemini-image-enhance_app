@@ -5,9 +5,9 @@ import ObjectRemover from './components/ObjectRemover';
 import StyleTransfer from './components/StyleTransfer';
 import ImageUpscaler from './components/ImageUpscaler';
 import Gallery from './components/Gallery';
-import ProAnalyst from './components/ProAnalyst';
 import Tools from './components/Tools';
 import Sidebar, { Mode } from './components/Sidebar';
+import Header from './components/Header';
 import BottomNavBar from './components/BottomNavBar';
 import Notification from './components/Notification';
 import InstallPrompt from './components/InstallPrompt';
@@ -63,7 +63,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'analyst', 'tools'];
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'tools'];
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -78,7 +78,6 @@ const AppContent: React.FC = () => {
       case 'style': return <StyleTransfer />;
       case 'upscale': return <ImageUpscaler />;
       case 'gallery': return <Gallery />;
-      case 'analyst': return <ProAnalyst />;
       case 'tools': return <Tools onModeChange={setMode} />;
       default: return <ImageGenerator />;
     }
@@ -91,7 +90,8 @@ const AppContent: React.FC = () => {
             onModeChange={setMode}
         />
         <div className="flex-1 flex flex-col md:ml-64">
-            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
+            <Header currentMode={mode} />
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pt-20 md:pt-8 pb-24 md:pb-8">
               <div className="transition-opacity duration-300 w-full">
                 {renderContent()}
               </div>

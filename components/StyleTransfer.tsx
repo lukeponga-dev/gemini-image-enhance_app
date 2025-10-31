@@ -16,6 +16,7 @@ const StyleTransfer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { consumeChainedImage } = useToolChain();
+  const [isUploading, setIsUploading] = useState<'content' | 'style' | null>(null);
 
   useEffect(() => {
     const chainedData = consumeChainedImage();
@@ -43,16 +44,25 @@ const StyleTransfer: React.FC = () => {
     }
     setError(null);
     setResultImage(null);
-    const url = URL.createObjectURL(file);
-    const { base64, mimeType } = await fileToBase64(file);
-    const imageState = { file, url, base64, mimeType };
+    setIsUploading(type);
 
-    if (type === 'content') {
-      if (contentImage) URL.revokeObjectURL(contentImage.url);
-      setContentImage(imageState);
-    } else {
-      if (styleImage) URL.revokeObjectURL(styleImage.url);
-      setStyleImage(imageState);
+    try {
+      const url = URL.createObjectURL(file);
+      const { base64, mimeType } = await fileToBase64(file);
+      const imageState = { file, url, base64, mimeType };
+
+      if (type === 'content') {
+        if (contentImage) URL.revokeObjectURL(contentImage.url);
+        setContentImage(imageState);
+      } else {
+        if (styleImage) URL.revokeObjectURL(styleImage.url);
+        setStyleImage(imageState);
+      }
+    } catch (e) {
+        console.error("Error processing file:", e);
+        setError("There was an error processing your file. Please try again.");
+    } finally {
+        setIsUploading(null);
     }
   };
 
@@ -94,7 +104,7 @@ const StyleTransfer: React.FC = () => {
             {contentImage ? (
               <img src={contentImage.url} alt="Content" className="rounded-lg shadow-lg w-full h-auto" />
             ) : (
-              <ImageDropzone onImageDrop={(file) => handleImageDrop(file, 'content')} />
+              <ImageDropzone onImageDrop={(file) => handleImageDrop(file, 'content')} isLoading={isUploading === 'content'} />
             )}
           </div>
           <div>
@@ -102,7 +112,7 @@ const StyleTransfer: React.FC = () => {
             {styleImage ? (
               <img src={styleImage.url} alt="Style" className="rounded-lg shadow-lg w-full h-auto" />
             ) : (
-              <ImageDropzone onImageDrop={(file) => handleImageDrop(file, 'style')} />
+              <ImageDropzone onImageDrop={(file) => handleImageDrop(file, 'style')} isLoading={isUploading === 'style'} />
             )}
           </div>
         </div>
@@ -115,7 +125,13 @@ const StyleTransfer: React.FC = () => {
 
         {contentImage && styleImage && (
           <div className="text-center my-8">
-            <Button onClick={handleSubmit} isLoading={isLoading} disabled={!contentImage || !styleImage} title="Apply the style image's aesthetic to the content image">
+            <Button 
+              onClick={handleSubmit} 
+              isLoading={isLoading} 
+              disabled={!contentImage || !styleImage} 
+              title="Apply the style image's aesthetic to the content image"
+              className="w-full sm:w-auto"
+            >
               Transfer Style
             </Button>
           </div>

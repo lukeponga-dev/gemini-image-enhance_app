@@ -21,6 +21,7 @@ const ProAnalyst: React.FC = () => {
     setError(null);
     setResponse(null);
 
+    // FIX: Corrected the malformed try-catch-finally block.
     try {
       const result = await getProResponse(prompt);
       setResponse(result);
@@ -57,7 +58,13 @@ const ProAnalyst: React.FC = () => {
           </div>
 
           <div className="text-center pt-2">
-            <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} title="Submit your query for in-depth analysis">
+            <Button 
+              type="submit" 
+              isLoading={isLoading} 
+              disabled={!prompt.trim()} 
+              title="Submit your query for in-depth analysis"
+              className="w-full sm:w-auto"
+            >
               Analyze with Pro Model
             </Button>
           </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import { 
-    GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon, GalleryIcon, SparklesIcon, AnalystIcon, ToolsIcon
+    GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon, GalleryIcon, SparklesIcon, ToolsIcon
 } from './Icons';
 
-export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'upscale' | 'gallery' | 'analyst' | 'tools';
+export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'upscale' | 'gallery' | 'tools';
 
-const modes: { id: Mode; label: string; icon: React.FC<{ className?: string }> }[] = [
+export const modes: { id: Mode; label: string; icon: React.FC<{ className?: string }> }[] = [
   { id: 'generate', label: 'Generator', icon: GeneratorIcon },
   { id: 'edit', label: 'Editor', icon: EditorIcon },
   { id: 'upscale', label: 'Enhancer', icon: UpscaleIcon },
@@ -13,7 +13,6 @@ const modes: { id: Mode; label: string; icon: React.FC<{ className?: string }> }
   { id: 'style', label: 'Style Transfer', icon: StyleIcon },
   { id: 'tools', label: 'More Tools', icon: ToolsIcon },
   { id: 'gallery', label: 'My Gallery', icon: GalleryIcon },
-  { id: 'analyst', label: 'Pro Analyst', icon: AnalystIcon },
 ];
 
 interface SidebarProps {

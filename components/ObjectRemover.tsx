@@ -61,7 +61,8 @@ const ObjectRemover: React.FC = () => {
       const newImageBase64 = await editImage(fullPrompt, base64, mimeType);
       setResultImage(`data:${mimeType};base64,${newImageBase64}`);
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.');
+      console.error("Object removal failed:", err);
+      setError("Could not remove the object. This can happen if the object isn't clear in the image or if the description is ambiguous. Please try a more specific prompt (e.g., 'the blue car in the background').");
     } finally {
       setIsLoading(false);
     }

@@ -18,7 +18,7 @@ interface BottomNavBarProps {
 const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentMode, onModeChange }) => {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
-      <div className="bg-slate-950/80 backdrop-blur-lg border-t border-slate-800/80">
+      <div className="bg-slate-950/70 backdrop-blur-xl border-t border-slate-800">
         <nav className="flex items-center justify-around h-20">
           {navItems.map((item) => {
             const isActive = currentMode === item.id;
