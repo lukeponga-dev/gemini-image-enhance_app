@@ -61,10 +61,10 @@ const StyleTransfer: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+    <div className="w-full max-w-6xl mx-auto bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
       <div className="grid md:grid-cols-2 gap-8 mb-8">
         <div>
-          <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Content Image</h3>
+          <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Content Image</h3>
           {contentImage ? (
             <img src={contentImage.url} alt="Content" className="rounded-lg shadow-lg w-full h-auto" />
           ) : (
@@ -72,7 +72,7 @@ const StyleTransfer: React.FC = () => {
           )}
         </div>
         <div>
-          <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Style Image</h3>
+          <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Style Image</h3>
           {styleImage ? (
             <img src={styleImage.url} alt="Style" className="rounded-lg shadow-lg w-full h-auto" />
           ) : (
@@ -82,7 +82,7 @@ const StyleTransfer: React.FC = () => {
       </div>
 
       {error && (
-        <div className="my-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300 text-center">
+        <div className="my-4 p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center">
           <p><strong>Error:</strong> {error}</p>
         </div>
       )}
@@ -97,12 +97,12 @@ const StyleTransfer: React.FC = () => {
 
       {(isLoading || resultImage) && (
         <div className="animate-fade-in">
-          <h3 className="text-2xl font-semibold mb-4 text-center text-gray-300">Result</h3>
+          <h3 className="text-2xl font-semibold mb-4 text-center text-slate-300">Result</h3>
           <div className="max-w-2xl mx-auto flex items-center justify-center">
             {isLoading && (
               <div className="flex flex-col items-center text-center p-8">
                 <Spinner />
-                <p className="mt-4 text-gray-400">Applying style...</p>
+                <p className="mt-4 text-slate-400">Applying style...</p>
               </div>
             )}
             {resultImage && (

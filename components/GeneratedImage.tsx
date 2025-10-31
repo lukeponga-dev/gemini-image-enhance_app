@@ -47,20 +47,20 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt }) => 
   };
 
   return (
-    <div className="relative group bg-gray-900/50 rounded-lg overflow-hidden shadow-lg border border-gray-700/50">
+    <div className="relative group bg-slate-900/50 rounded-lg overflow-hidden shadow-lg border border-slate-800">
       <img src={src} alt={alt} className="w-full h-full object-contain" />
       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center gap-4">
         <button
           onClick={handleSaveToGallery}
           disabled={isSaved}
-          className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-green-500 disabled:bg-gray-600 disabled:cursor-not-allowed"
+          className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-green-500 disabled:bg-slate-600 disabled:cursor-not-allowed"
         >
             <SaveIcon className="w-5 h-5" />
             {isSaved ? 'Saved' : 'Save'}
         </button>
         <button
           onClick={handleDownload}
-          className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
+          className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500"
         >
           <DownloadIcon className="w-5 h-5" />
           Download

@@ -3,14 +3,20 @@ import React from 'react';
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   isLoading?: boolean;
+  variant?: 'primary' | 'secondary';
 }
 
-const Button: React.FC<ButtonProps> = ({ children, isLoading = false, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ children, isLoading = false, variant = 'primary', ...props }) => {
+  const primaryClasses = "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 focus:ring-cyan-500 text-white shadow-lg hover:shadow-cyan-500/20";
+  const secondaryClasses = "bg-slate-800/60 hover:bg-slate-700/80 text-slate-200 border border-slate-700 hover:border-slate-600 focus:ring-slate-500";
+  
   return (
     <button
       {...props}
       disabled={isLoading || props.disabled}
-      className={`relative inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 disabled:from-gray-600 disabled:to-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 ${props.className || ''}`}
+      className={`relative inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:from-slate-600 disabled:to-slate-600 disabled:text-slate-400 disabled:cursor-not-allowed disabled:shadow-none transition-all duration-300 transform hover:scale-105 ${
+        variant === 'primary' ? primaryClasses : secondaryClasses
+      } ${props.className || ''}`}
     >
       {isLoading && (
         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

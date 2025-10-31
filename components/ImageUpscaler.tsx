@@ -55,39 +55,39 @@ const ImageUpscaler: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       {!originalImage && (
-        <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
-            <h2 className="text-xl text-center font-semibold mb-4 text-gray-200">Automatically improve image quality</h2>
-            <p className="text-center text-gray-400 mb-6">Upload a lower-quality image to enhance its resolution and details.</p>
+        <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+            <h2 className="text-xl text-center font-semibold mb-4 text-slate-200">Automatically improve image quality</h2>
+            <p className="text-center text-slate-400 mb-6">Upload a lower-quality image to enhance its resolution and details.</p>
             <ImageDropzone onImageDrop={handleImageDrop} />
         </div>
       )}
 
       {error && !originalImage && (
-        <div className="mt-4 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300 text-center">
+        <div className="mt-4 p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center">
           <p><strong>Error:</strong> {error}</p>
         </div>
       )}
 
       {originalImage && (
-        <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+        <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Original Image</h3>
+              <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Original Image</h3>
               <img src={originalImage.url} alt="Original for upscaling" className="rounded-lg shadow-lg max-w-full h-auto" />
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Enhanced Image</h3>
-              <div className="w-full aspect-square bg-gray-900/50 rounded-lg flex items-center justify-center border border-gray-700">
+              <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Enhanced Image</h3>
+              <div className="w-full aspect-square bg-slate-900/80 rounded-lg flex items-center justify-center border border-slate-700">
                 {isLoading && (
                   <div className="flex flex-col items-center text-center">
                     <Spinner />
-                    <p className="mt-4 text-gray-400">Enhancing image...</p>
+                    <p className="mt-4 text-slate-400">Enhancing image...</p>
                   </div>
                 )}
                 {!isLoading && !resultImage && (
-                  <p className="text-gray-500">Your enhanced image will appear here.</p>
+                  <p className="text-slate-500">Your enhanced image will appear here.</p>
                 )}
                 {resultImage && (
                    <div className="w-full animate-fade-in">
@@ -99,22 +99,22 @@ const ImageUpscaler: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div>
-              <label className="block text-base font-medium text-gray-300 mb-3 text-center">
+              <label className="block text-base font-medium text-slate-300 mb-3 text-center">
                 Select Enhancement Factor
               </label>
-              <div className="flex justify-center bg-gray-900/50 p-1.5 rounded-full mx-auto max-w-xs">
+              <div className="flex justify-center bg-slate-800/60 p-1.5 rounded-full mx-auto max-w-xs border border-slate-700">
                 {[2, 4, 8].map(factor => (
                   <button
                     key={factor}
                     type="button"
                     onClick={() => setScale(factor)}
                     disabled={isLoading}
-                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                        scale === factor ? 'text-white' : 'text-gray-300 hover:text-white'
+                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
+                        scale === factor ? 'text-white' : 'text-slate-300 hover:text-white'
                     }`}
                   >
                      {scale === factor && (
-                        <span className="absolute inset-0 bg-blue-600 rounded-full z-0"/>
+                        <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full z-0"/>
                      )}
                      <span className="relative z-10">{factor}x</span>
                   </button>
@@ -122,7 +122,7 @@ const ImageUpscaler: React.FC = () => {
               </div>
             </div>
             {error && (
-              <div className="p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300 text-center">
+              <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center">
                 <p><strong>Error:</strong> {error}</p>
               </div>
             )}
@@ -130,9 +130,9 @@ const ImageUpscaler: React.FC = () => {
               <Button type="submit" isLoading={isLoading} className="w-full sm:w-auto">
                 Enhance Image
               </Button>
-              <button type="button" onClick={resetState} className="w-full sm:w-auto px-6 py-3 border border-gray-600/80 text-base font-medium rounded-md shadow-sm text-gray-300 bg-gray-700/50 hover:bg-gray-700 transition-colors">
+               <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto">
                 Upload New Image
-              </button>
+              </Button>
             </div>
           </form>
         </div>

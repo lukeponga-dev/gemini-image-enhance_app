@@ -36,10 +36,10 @@ const ImageGenerator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+    <div className="w-full max-w-4xl mx-auto bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label htmlFor="prompt-generator" className="block text-lg font-medium text-gray-200 mb-2">
+          <label htmlFor="prompt-generator" className="block text-lg font-medium text-slate-200 mb-2">
             Describe the image you want to create
           </label>
           <textarea
@@ -48,13 +48,13 @@ const ImageGenerator: React.FC = () => {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="e.g., A photorealistic image of a majestic lion wearing a crown, sitting on a throne in a futuristic city"
-            className="w-full bg-gray-900/50 border border-gray-600 rounded-lg p-4 text-white placeholder-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition shadow-inner"
+            className="w-full bg-slate-800/60 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition shadow-inner"
             disabled={isLoading}
           />
         </div>
 
         <div>
-           <label htmlFor="aspect-ratio" className="block text-sm font-medium text-gray-300 mb-2">
+           <label className="block text-sm font-medium text-slate-300 mb-2">
             Aspect Ratio
           </label>
           <div className="flex flex-wrap gap-2">
@@ -64,8 +64,8 @@ const ImageGenerator: React.FC = () => {
                 type="button"
                 onClick={() => setAspectRatio(ratio)}
                 disabled={isLoading}
-                className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 transform hover:scale-105 ${
-                    aspectRatio === ratio ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 transform hover:scale-105 ${
+                    aspectRatio === ratio ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md' : 'bg-slate-700/80 text-slate-300 hover:bg-slate-700'
                 }`}
               >
                 {ratio}
@@ -83,13 +83,13 @@ const ImageGenerator: React.FC = () => {
       
       <div className="mt-8 min-h-[20rem] sm:min-h-[24rem] flex items-center justify-center">
         {isLoading && (
-            <div className="flex flex-col items-center justify-center p-8 bg-gray-800/50 rounded-lg w-full h-96">
+            <div className="flex flex-col items-center justify-center p-8 bg-slate-800/50 rounded-lg w-full h-96">
                 <Spinner />
-                <p className="mt-4 text-gray-400">Generating your masterpiece... this may take a moment.</p>
+                <p className="mt-4 text-slate-400">Generating your masterpiece... this may take a moment.</p>
             </div>
         )}
         {error && (
-            <div className="p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-300 text-center">
+            <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center">
                 <p><strong>Error:</strong> {error}</p>
             </div>
         )}
