@@ -1,0 +1,5 @@
+{
+  "name": "Gemini Image Enhancer",
+  "description": "An AI-powered application to generate new images from text prompts and edit existing images using natural language commands. Powered by Google Gemini.",
+  "requestFramePermissions": []
+}
