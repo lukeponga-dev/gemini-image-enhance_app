@@ -195,3 +195,41 @@ export const upscaleImage = async (
     throw new Error("Failed to upscale image.");
   }
 };
+
+/**
+ * Automatically corrects the colors of an image.
+ * @param imageBase64 The base64 encoded string of the image.
+ * @param mimeType The MIME type of the image.
+ * @returns A promise that resolves to the base64 string of the color-corrected image.
+ */
+export const correctColors = async (
+  imageBase64: string,
+  mimeType: string
+): Promise<string> => {
+  try {
+    const ai = getAiClient();
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents: {
+        parts: [
+          { inlineData: { data: imageBase64, mimeType: mimeType } },
+          { text: "Automatically correct the colors of this image. Adjust brightness, contrast, saturation, and white balance to make the colors look natural and vibrant. Do not crop or change the composition." },
+        ],
+      },
+      config: {
+        responseModalities: [Modality.IMAGE],
+      },
+    });
+
+    for (const part of response.candidates[0].content.parts) {
+      if (part.inlineData) {
+        return part.inlineData.data;
+      }
+    }
+    
+    throw new Error("No image data found in the color correction response.");
+  } catch (error) {
+    console.error("Error correcting colors:", error);
+    throw new Error("Failed to correct colors.");
+  }
+};
