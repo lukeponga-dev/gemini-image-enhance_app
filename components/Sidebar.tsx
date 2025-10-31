@@ -1,9 +1,9 @@
 import React from 'react';
 import { 
-    GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon, GalleryIcon, SparklesIcon, ToolsIcon
+    GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon, GalleryIcon, SparklesIcon, ToolsIcon, AnalystIcon, ChatIcon
 } from './Icons';
 
-export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'upscale' | 'gallery' | 'tools';
+export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'upscale' | 'gallery' | 'tools' | 'analyst' | 'chat';
 
 export const modes: { id: Mode; label: string; icon: React.FC<{ className?: string }> }[] = [
   { id: 'generate', label: 'Generator', icon: GeneratorIcon },
@@ -13,6 +13,8 @@ export const modes: { id: Mode; label: string; icon: React.FC<{ className?: stri
   { id: 'style', label: 'Style Transfer', icon: StyleIcon },
   { id: 'tools', label: 'More Tools', icon: ToolsIcon },
   { id: 'gallery', label: 'My Gallery', icon: GalleryIcon },
+  { id: 'analyst', label: 'Pro Analyst', icon: AnalystIcon },
+  { id: 'chat', label: 'Chatbot', icon: ChatIcon },
 ];
 
 interface SidebarProps {
@@ -26,10 +28,10 @@ const Sidebar: React.FC<SidebarProps> = ({ currentMode, onModeChange }) => {
   };
     
   return (
-    <aside className="hidden md:flex fixed top-0 left-0 h-full w-64 bg-slate-900/70 backdrop-blur-xl border-r border-slate-800/80 z-40 flex-col">
-      <div className="flex items-center justify-between p-4 border-b border-slate-800/80">
+    <aside className="hidden md:flex fixed top-0 left-0 h-full w-64 bg-zinc-950/70 backdrop-blur-xl border-r border-zinc-800/80 z-40 flex-col">
+      <div className="flex items-center justify-between p-4 border-b border-zinc-800/80">
          <div className="flex items-center space-x-3">
-           <SparklesIcon className="h-7 w-7 text-cyan-400" />
+           <SparklesIcon className="h-7 w-7 text-violet-400" />
            <h2 className="text-lg font-bold text-white tracking-tight">Image Tools</h2>
          </div>
       </div>
@@ -42,21 +44,21 @@ const Sidebar: React.FC<SidebarProps> = ({ currentMode, onModeChange }) => {
               key={item.id}
               onClick={() => handleModeClick(item.id)}
               title={`Switch to ${item.label}`}
-              className={`w-full flex items-center space-x-3 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:ring-cyan-500 relative ${
+              className={`w-full flex items-center space-x-3 px-4 py-2.5 text-left text-sm font-medium rounded-lg transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900 focus-visible:ring-violet-500 relative ${
                 isActive
-                  ? 'bg-gradient-to-r from-blue-600/20 to-cyan-500/20 text-white shadow-inner'
-                  : 'text-slate-300 hover:bg-slate-800/60 hover:text-white'
+                  ? 'bg-gradient-to-r from-purple-600/20 to-violet-500/20 text-white shadow-inner'
+                  : 'text-zinc-300 hover:bg-zinc-800/60 hover:text-white'
               }`}
             >
-               <div className={`absolute left-0 h-6 w-1 rounded-r-full bg-cyan-400 transition-transform duration-300 ${isActive ? 'scale-y-100' : 'scale-y-0'}`} />
+               <div className={`absolute left-0 h-6 w-1 rounded-r-full bg-violet-400 transition-transform duration-300 ${isActive ? 'scale-y-100' : 'scale-y-0'}`} />
                <Icon className="w-5 h-5 flex-shrink-0 ml-1" />
                <span>{item.label}</span>
             </button>
           );
         })}
       </nav>
-      <div className="p-4 border-t border-slate-800/80">
-          <p className="text-slate-500 text-xs text-center">Powered by Google Gemini</p>
+      <div className="p-4 border-t border-zinc-800/80">
+          <p className="text-zinc-500 text-xs text-center">Powered by Google Gemini</p>
       </div>
     </aside>
   );

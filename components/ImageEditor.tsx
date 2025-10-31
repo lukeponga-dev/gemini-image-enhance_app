@@ -80,11 +80,11 @@ const ImageEditor: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">AI Image Editor</h2>
-        <p className="mt-2 text-lg text-slate-400">Edit your images using natural language commands.</p>
+        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Image Editor</h2>
+        <p className="mt-2 text-lg text-zinc-400">Edit your images using natural language commands.</p>
       </div>
       {!originalImage && (
-         <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+         <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
             <ImageDropzone onImageDrop={handleImageDrop} />
          </div>
       )}
@@ -96,21 +96,21 @@ const ImageEditor: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
           {!editedImage && !isLoading ? (
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="flex flex-col items-center">
-                <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Original Image</h3>
+                <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Original Image</h3>
                 <img src={originalImage.url} alt="Original upload" className="rounded-lg shadow-lg max-w-full h-auto" />
               </div>
               <div className="flex flex-col items-center justify-center h-full">
-                 <p className="text-slate-400">Your edited image will appear here.</p>
+                 <p className="text-zinc-400">Your edited image will appear here.</p>
               </div>
             </div>
           ) : (
             <div className="animate-fade-in space-y-8">
               <div>
-                <h3 className="text-2xl font-semibold mb-4 text-center text-slate-300">Compare Before & After</h3>
+                <h3 className="text-2xl font-semibold mb-4 text-center text-zinc-300">Compare Before & After</h3>
                 <ImageComparator 
                   before={originalImage.url} 
                   after={editedImage || originalImage.url}
@@ -120,14 +120,14 @@ const ImageEditor: React.FC = () => {
               </div>
               {editedImage && (
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Final Result</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Final Result</h3>
                   <GeneratedImage src={editedImage} alt={prompt} prompt={prompt} />
                 </div>
               )}
                {isLoading && (
                     <div className="flex flex-col items-center text-center p-8">
                       <Spinner />
-                      <p className="mt-4 text-slate-400">Applying your edits...</p>
+                      <p className="mt-4 text-zinc-400">Applying your edits...</p>
                     </div>
                 )}
             </div>
@@ -135,7 +135,7 @@ const ImageEditor: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-4">
              <div>
-              <label htmlFor="prompt-editor" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="prompt-editor" className="block text-sm font-medium text-zinc-300 mb-2">
                 Describe how you want to edit the image
               </label>
               <input
@@ -144,7 +144,7 @@ const ImageEditor: React.FC = () => {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="e.g., Add a retro filter, remove the person in the background"
-                className="w-full bg-slate-800/60 border border-slate-700 rounded-lg p-3 text-white placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition shadow-inner"
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-3 text-white placeholder-zinc-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition shadow-inner"
                 disabled={isLoading}
               />
             </div>

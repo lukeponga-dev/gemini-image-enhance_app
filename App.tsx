@@ -6,6 +6,8 @@ import StyleTransfer from './components/StyleTransfer';
 import ImageUpscaler from './components/ImageUpscaler';
 import Gallery from './components/Gallery';
 import Tools from './components/Tools';
+import ProAnalyst from './components/ProAnalyst';
+import Chatbot from './components/Chatbot';
 import Sidebar, { Mode } from './components/Sidebar';
 import Header from './components/Header';
 import BottomNavBar from './components/BottomNavBar';
@@ -63,7 +65,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'tools'];
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'tools', 'analyst', 'chat'];
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -79,12 +81,14 @@ const AppContent: React.FC = () => {
       case 'upscale': return <ImageUpscaler />;
       case 'gallery': return <Gallery />;
       case 'tools': return <Tools onModeChange={setMode} />;
+      case 'analyst': return <ProAnalyst />;
+      case 'chat': return <Chatbot />;
       default: return <ImageGenerator />;
     }
   }
 
   return (
-    <div className="min-h-screen text-slate-100 font-sans flex bg-slate-950">
+    <div className="min-h-screen text-zinc-100 font-sans flex bg-zinc-950">
         <Sidebar 
             currentMode={mode}
             onModeChange={setMode}

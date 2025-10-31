@@ -64,7 +64,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
 
 
   return (
-    <div className="bg-slate-900/50 rounded-lg overflow-hidden shadow-lg border border-slate-800 flex flex-col">
+    <div className="bg-zinc-900/80 rounded-lg overflow-hidden shadow-lg border border-zinc-800 flex flex-col">
       <div className="relative group">
          <img src={src} alt={alt} className="w-full h-auto object-contain" />
          { context === 'gallery' && (
@@ -73,7 +73,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
                   onClick={handleSaveToGallery}
                   disabled={isSaved}
                   title={isSaved ? 'This image is already in your gallery' : 'Save this image to your personal gallery'}
-                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-green-500 disabled:bg-slate-600 disabled:cursor-not-allowed"
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-100 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-green-500 disabled:bg-zinc-600 disabled:cursor-not-allowed"
                 >
                     <SaveIcon className="w-5 h-5" />
                     <span className="hidden sm:inline">{isSaved ? 'Saved' : 'Save'}</span>
@@ -81,7 +81,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
                 <button
                   onClick={handleDownload}
                   title="Download this image to your device"
-                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500"
+                  className="opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200 transform group-hover:scale-100 scale-90 flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-blue-500"
                 >
                   <DownloadIcon className="w-5 h-5" />
                   <span className="hidden sm:inline">Download</span>
@@ -91,14 +91,14 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
       </div>
      
       {showActions && (
-          <div className="p-4 bg-slate-900 border-t border-slate-800">
+          <div className="p-4 bg-zinc-900 border-t border-zinc-800">
              {/* Primary Actions */}
              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                  <button
                     onClick={handleSaveToGallery}
                     disabled={isSaved}
                     title={isSaved ? 'This image is already in your gallery' : 'Save this image to your personal gallery'}
-                    className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-green-500 disabled:bg-slate-600 disabled:cursor-not-allowed transition-all transform hover:scale-105"
+                    className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-green-500 disabled:bg-zinc-600 disabled:cursor-not-allowed transition-all transform hover:scale-105"
                     >
                     <SaveIcon className="w-5 h-5" />
                     <span>{isSaved ? 'Saved to Gallery' : 'Save to Gallery'}</span>
@@ -106,7 +106,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
                  <button
                     onClick={handleDownload}
                     title="Download this image to your device"
-                    className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-blue-500 transition-all transform hover:scale-105"
+                    className="w-full sm:w-auto flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-blue-500 transition-all transform hover:scale-105"
                     >
                     <DownloadIcon className="w-5 h-5" />
                     <span>Download</span>
@@ -114,8 +114,8 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
              </div>
              
              {/* Tool Chaining Actions */}
-             <div className="mt-4 pt-4 border-t border-slate-700/60">
-                 <p className="text-sm font-semibold text-center text-slate-400 mb-3">Send to another tool:</p>
+             <div className="mt-4 pt-4 border-t border-zinc-700/60">
+                 <p className="text-sm font-semibold text-center text-zinc-400 mb-3">Send to another tool:</p>
                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                      {actionTools.map(tool => {
                          const Icon = tool.icon;
@@ -124,7 +124,7 @@ const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, conte
                                 key={tool.id}
                                 onClick={() => handleSendTo(tool.id)}
                                 title={`Send image to ${tool.label}`}
-                                className="flex items-center justify-center gap-2 px-3 py-2 text-sm text-slate-200 bg-slate-800/60 hover:bg-slate-700/80 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 transition-colors"
+                                className="flex items-center justify-center gap-2 px-3 py-2 text-sm text-zinc-200 bg-zinc-800/60 hover:bg-zinc-700/80 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-violet-500 transition-colors"
                             >
                                 <Icon className="w-4 h-4" />
                                 <span>{tool.label}</span>

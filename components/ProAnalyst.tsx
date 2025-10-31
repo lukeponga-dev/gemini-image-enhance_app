@@ -37,13 +37,13 @@ const ProAnalyst: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">Pro Analyst</h2>
-        <p className="mt-2 text-lg text-slate-400">Tackle complex problems with advanced AI reasoning.</p>
+        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">Pro Analyst</h2>
+        <p className="mt-2 text-lg text-zinc-400">Tackle complex problems with advanced AI reasoning.</p>
       </div>
-      <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+      <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="prompt-analyst" className="block text-lg font-medium text-slate-200 mb-2">
+            <label htmlFor="prompt-analyst" className="block text-lg font-medium text-zinc-200 mb-2">
               Enter your complex query
             </label>
             <textarea
@@ -52,7 +52,7 @@ const ProAnalyst: React.FC = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g., Explain the theory of relativity as if I'm a high school student, including its key postulates, main consequences, and a simple real-world analogy."
-              className="w-full bg-slate-800/60 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition shadow-inner"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-4 text-white placeholder-zinc-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition shadow-inner"
               disabled={isLoading}
             />
           </div>
@@ -72,10 +72,10 @@ const ProAnalyst: React.FC = () => {
 
         <div className="mt-8 min-h-[12rem] flex items-center justify-center">
           {isLoading && (
-            <div className="flex flex-col items-center justify-center p-8 bg-slate-800/50 rounded-lg w-full">
+            <div className="flex flex-col items-center justify-center p-8 bg-zinc-800/50 rounded-lg w-full">
               <Spinner />
-              <p className="mt-4 text-slate-400 font-semibold">Thinking on your complex query...</p>
-              <p className="mt-1 text-sm text-slate-500">This may take a bit longer for detailed analysis.</p>
+              <p className="mt-4 text-zinc-400 font-semibold">Thinking on your complex query...</p>
+              <p className="mt-1 text-sm text-zinc-500">This may take a bit longer for detailed analysis.</p>
             </div>
           )}
           {error && (
@@ -84,12 +84,12 @@ const ProAnalyst: React.FC = () => {
             </div>
           )}
           {response && (
-            <div className="w-full animate-fade-in bg-slate-800/50 border border-slate-700/50 rounded-lg p-4 sm:p-6">
+            <div className="w-full animate-fade-in bg-zinc-800/50 border border-zinc-700/50 rounded-lg p-4 sm:p-6">
                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex-shrink-0 bg-gradient-to-r from-blue-600 to-cyan-500 p-2 rounded-full">
+                    <div className="flex-shrink-0 bg-gradient-to-r from-purple-600 to-violet-500 p-2 rounded-full">
                         <AnalystIcon className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-200">Analysis Result</h3>
+                    <h3 className="text-lg font-semibold text-zinc-200">Analysis Result</h3>
                 </div>
               <div
                 className="prose prose-custom max-w-none"

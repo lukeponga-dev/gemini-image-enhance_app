@@ -59,7 +59,7 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ before, after, before
   return (
     <div
       ref={containerRef}
-      className="relative w-full max-w-2xl mx-auto aspect-square select-none overflow-hidden rounded-lg shadow-lg bg-slate-900/50"
+      className="relative w-full max-w-2xl mx-auto aspect-square select-none overflow-hidden rounded-lg shadow-lg bg-zinc-900/80"
     >
       <img
         src={before}
@@ -86,7 +86,7 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ before, after, before
         title="Drag to compare before and after"
       >
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-10 w-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full flex items-center justify-center shadow-lg cursor-ew-resize border-2 border-white/50 transition-transform duration-200 group-hover:scale-110"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-10 w-10 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full flex items-center justify-center shadow-lg cursor-ew-resize border-2 border-white/50 transition-transform duration-200 group-hover:scale-110"
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />

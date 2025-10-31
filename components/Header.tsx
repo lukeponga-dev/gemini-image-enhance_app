@@ -10,7 +10,7 @@ const Header: React.FC<HeaderProps> = ({ currentMode }) => {
   const title = currentTool ? currentTool.label : 'Image Tools';
 
   return (
-    <header className="md:hidden fixed top-0 left-0 right-0 h-16 bg-slate-950/70 backdrop-blur-xl border-b border-slate-800/80 z-30 flex items-center justify-center">
+    <header className="md:hidden fixed top-0 left-0 right-0 h-16 bg-zinc-950/70 backdrop-blur-xl border-b border-zinc-800/80 z-30 flex items-center justify-center">
         <h1 className="text-lg font-bold text-white tracking-tight">{title}</h1>
     </header>
   );

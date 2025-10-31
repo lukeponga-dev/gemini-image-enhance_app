@@ -78,11 +78,11 @@ const ImageUpscaler: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto">
        <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">AI Image Enhancer</h2>
-        <p className="mt-2 text-lg text-slate-400">Improve quality, increase resolution, and enhance details automatically.</p>
+        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Image Enhancer</h2>
+        <p className="mt-2 text-lg text-zinc-400">Improve quality, increase resolution, and enhance details automatically.</p>
       </div>
       {!originalImage && (
-        <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
             <ImageDropzone onImageDrop={handleImageDrop} />
         </div>
       )}
@@ -94,23 +94,23 @@ const ImageUpscaler: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Original Image</h3>
+              <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Original Image</h3>
               <img src={originalImage.url} alt="Original for upscaling" className="rounded-lg shadow-lg max-w-full h-auto" />
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-slate-300">Enhanced Image</h3>
-              <div className="w-full aspect-square bg-slate-900/80 rounded-lg flex items-center justify-center border border-slate-700">
+              <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Enhanced Image</h3>
+              <div className="w-full aspect-square bg-zinc-900/80 rounded-lg flex items-center justify-center border border-zinc-700">
                 {isLoading && (
                   <div className="flex flex-col items-center text-center">
                     <Spinner />
-                    <p className="mt-4 text-slate-400">Enhancing image...</p>
+                    <p className="mt-4 text-zinc-400">Enhancing image...</p>
                   </div>
                 )}
                 {!isLoading && !resultImage && (
-                  <p className="text-slate-500">Your enhanced image will appear here.</p>
+                  <p className="text-zinc-500">Your enhanced image will appear here.</p>
                 )}
                 {resultImage && (
                    <div className="w-full animate-fade-in">
@@ -122,10 +122,10 @@ const ImageUpscaler: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div>
-              <label className="block text-base font-medium text-slate-300 mb-3 text-center">
+              <label className="block text-base font-medium text-zinc-300 mb-3 text-center">
                 Select Enhancement Factor
               </label>
-              <div className="flex justify-center bg-slate-800/60 p-1.5 rounded-full mx-auto max-w-xs border border-slate-700">
+              <div className="flex justify-center bg-zinc-800 p-1.5 rounded-full mx-auto max-w-xs border border-zinc-700">
                 {[2, 4, 8].map(factor => (
                   <button
                     key={factor}
@@ -133,12 +133,12 @@ const ImageUpscaler: React.FC = () => {
                     onClick={() => setScale(factor)}
                     disabled={isLoading}
                     title={`Set enhancement factor to ${factor}x`}
-                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
-                        scale === factor ? 'text-white' : 'text-slate-300 hover:text-white'
+                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-zinc-900 ${
+                        scale === factor ? 'text-white' : 'text-zinc-300 hover:text-white'
                     }`}
                   >
                      {scale === factor && (
-                        <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full z-0"/>
+                        <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full z-0"/>
                      )}
                      <span className="relative z-10">{factor}x</span>
                   </button>

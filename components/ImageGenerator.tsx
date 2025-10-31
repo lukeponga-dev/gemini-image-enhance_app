@@ -38,13 +38,13 @@ const ImageGenerator: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-white tracking-tight">AI Image Generator</h2>
-        <p className="mt-2 text-lg text-slate-400">Create stunning visuals from simple text descriptions.</p>
+        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Image Generator</h2>
+        <p className="mt-2 text-lg text-zinc-400">Create stunning visuals from simple text descriptions.</p>
       </div>
-      <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
+      <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="prompt-generator" className="block text-lg font-medium text-slate-200 mb-2">
+            <label htmlFor="prompt-generator" className="block text-lg font-medium text-zinc-200 mb-2">
               Describe the image you want to create
             </label>
             <textarea
@@ -53,13 +53,13 @@ const ImageGenerator: React.FC = () => {
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="e.g., A photorealistic image of a majestic lion wearing a crown, sitting on a throne in a futuristic city"
-              className="w-full bg-slate-800/60 border border-slate-700 rounded-lg p-4 text-white placeholder-slate-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition shadow-inner"
+              className="w-full bg-zinc-800 border border-zinc-700 rounded-lg p-4 text-white placeholder-zinc-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition shadow-inner"
               disabled={isLoading}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-zinc-300 mb-2">
               Aspect Ratio
             </label>
             <div className="flex flex-wrap gap-2">
@@ -70,8 +70,8 @@ const ImageGenerator: React.FC = () => {
                   onClick={() => setAspectRatio(ratio)}
                   disabled={isLoading}
                   title={`Set aspect ratio to ${ratio}`}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 transform hover:scale-105 ${
-                      aspectRatio === ratio ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md' : 'bg-slate-700/80 text-slate-300 hover:bg-slate-700'
+                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-zinc-900 transform hover:scale-105 ${
+                      aspectRatio === ratio ? 'bg-gradient-to-r from-purple-600 to-violet-500 text-white shadow-md' : 'bg-zinc-700/80 text-zinc-300 hover:bg-zinc-700'
                   }`}
                 >
                   {ratio}
@@ -89,9 +89,9 @@ const ImageGenerator: React.FC = () => {
         
         <div className="mt-8 min-h-[20rem] sm:min-h-[24rem] flex items-center justify-center">
           {isLoading && (
-              <div className="flex flex-col items-center justify-center p-8 bg-slate-800/50 rounded-lg w-full h-96">
+              <div className="flex flex-col items-center justify-center p-8 bg-zinc-800/50 rounded-lg w-full h-96">
                   <Spinner />
-                  <p className="mt-4 text-slate-400">Generating your masterpiece... this may take a moment.</p>
+                  <p className="mt-4 text-zinc-400">Generating your masterpiece... this may take a moment.</p>
               </div>
           )}
           {error && (

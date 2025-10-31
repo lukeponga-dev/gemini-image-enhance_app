@@ -7,14 +7,14 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: React.FC<ButtonProps> = ({ children, isLoading = false, variant = 'primary', ...props }) => {
-  const primaryClasses = "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 focus:ring-cyan-500 text-white shadow-lg hover:shadow-cyan-500/20";
-  const secondaryClasses = "bg-slate-800/60 hover:bg-slate-700/80 text-slate-200 border border-slate-700 hover:border-slate-600 focus:ring-slate-500";
+  const primaryClasses = "bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 focus:ring-violet-500 text-white shadow-lg hover:shadow-violet-500/20";
+  const secondaryClasses = "bg-zinc-800/60 hover:bg-zinc-700/80 text-zinc-200 border border-zinc-700 hover:border-zinc-600 focus:ring-zinc-500";
   
   return (
     <button
       {...props}
       disabled={isLoading || props.disabled}
-      className={`relative inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:from-slate-600 disabled:to-slate-600 disabled:text-slate-400 disabled:cursor-not-allowed disabled:shadow-none transition-all duration-300 transform hover:scale-105 ${
+      className={`relative inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 disabled:from-zinc-600 disabled:to-zinc-600 disabled:text-zinc-400 disabled:cursor-not-allowed disabled:shadow-none transition-all duration-300 transform hover:scale-105 ${
         variant === 'primary' ? primaryClasses : secondaryClasses
       } ${props.className || ''}`}
     >

@@ -57,7 +57,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onImageDrop, isLoading = 
       onDrop={handleDrop}
       onClick={openFileDialog}
       title={isLoading ? "Processing your image..." : "Click or drag and drop an image file here"}
-      className={`relative w-full p-8 border-2 border-dashed rounded-lg text-center transition-all duration-300 ${isDragging ? 'border-cyan-400 bg-slate-800/50 scale-105 shadow-2xl shadow-cyan-500/10' : 'border-slate-700 bg-transparent'} ${isLoading ? 'cursor-wait' : 'cursor-pointer hover:border-slate-600'}`}
+      className={`relative w-full p-8 border-2 border-dashed rounded-lg text-center transition-all duration-300 ${isDragging ? 'border-violet-400 bg-zinc-800/50 scale-105 shadow-2xl shadow-violet-500/10' : 'border-zinc-700 bg-transparent'} ${isLoading ? 'cursor-wait' : 'cursor-pointer hover:border-zinc-600'}`}
     >
       <input
         type="file"
@@ -68,17 +68,17 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onImageDrop, isLoading = 
         disabled={isLoading}
       />
       {isLoading ? (
-        <div className="flex flex-col items-center justify-center space-y-4 text-slate-300">
+        <div className="flex flex-col items-center justify-center space-y-4 text-zinc-300">
             <Spinner />
             <p className="text-lg font-semibold">Processing Image...</p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center space-y-3 text-slate-400 transition-transform duration-300 transform group-hover:scale-110">
+        <div className="flex flex-col items-center justify-center space-y-3 text-zinc-400 transition-transform duration-300 transform group-hover:scale-110">
            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
           </svg>
           <p className="text-lg font-semibold">
-            <span className="text-cyan-400">Click to upload</span> or drag and drop
+            <span className="text-violet-400">Click to upload</span> or drag and drop
           </p>
           <p className="text-sm">PNG, JPG, or WEBP</p>
         </div>
