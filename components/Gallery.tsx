@@ -13,17 +13,21 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto">
-      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">My Gallery ({galleryItems.length})</h2>
-        {galleryItems.length > 0 && (
-          <button
-            onClick={handleClearGallery}
-            className="px-4 sm:px-5 py-2 text-sm sm:text-base bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-red-500 transition-all transform hover:scale-105"
-          >
-            Clear Gallery
-          </button>
-        )}
+       <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-white tracking-tight">My Gallery ({galleryItems.length})</h2>
+        <p className="mt-2 text-lg text-slate-400">Browse, manage, and reuse your saved creations.</p>
       </div>
+
+      {galleryItems.length > 0 && (
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={handleClearGallery}
+              className="px-5 py-2 text-sm bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-red-500 transition-all transform hover:scale-105"
+            >
+              Clear Gallery
+            </button>
+          </div>
+        )}
 
       {galleryItems.length === 0 ? (
         <div className="text-center py-16 px-4 bg-slate-900/50 rounded-2xl border border-slate-800">
@@ -36,7 +40,7 @@ const Gallery: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {galleryItems.map(item => (
-            <GeneratedImage key={item.id} src={item.src} alt={item.alt} prompt={item.prompt} />
+            <GeneratedImage key={item.id} src={item.src} alt={item.alt} prompt={item.prompt} context="gallery" />
           ))}
         </div>
       )}

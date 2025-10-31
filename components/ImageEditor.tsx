@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { editImage } from '../services/geminiService';
 import ImageDropzone from './ImageDropzone';
 import Button from './Button';
 import GeneratedImage from './GeneratedImage';
 import Spinner from './Spinner';
-import { fileToBase64 } from '../utils/imageUtils';
+import { fileToBase64, dataUrlToFile } from '../utils/imageUtils';
 import ImageComparator from './ImageComparator';
+import { useToolChain } from '../contexts/ToolChainContext';
 
 const ImageEditor: React.FC = () => {
   const [originalImage, setOriginalImage] = useState<{ file: File; url: string } | null>(null);
@@ -13,6 +14,26 @@ const ImageEditor: React.FC = () => {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { consumeChainedImage } = useToolChain();
+
+  useEffect(() => {
+    const chainedData = consumeChainedImage();
+    if (chainedData?.targetTool === 'edit') {
+      const { image } = chainedData;
+      const processChainedImage = async () => {
+        try {
+            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
+            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
+            if (originalImage) URL.revokeObjectURL(originalImage.url);
+            handleImageDrop(file);
+        } catch (e) {
+            console.error("Failed to process chained image", e);
+            setError("Could not load the image from the previous tool.");
+        }
+      };
+      processChainedImage();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleImageDrop = (file: File) => {
     if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
@@ -58,6 +79,10 @@ const ImageEditor: React.FC = () => {
 
   return (
     <div className="w-full max-w-5xl mx-auto">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-white tracking-tight">AI Image Editor</h2>
+        <p className="mt-2 text-lg text-slate-400">Edit your images using natural language commands.</p>
+      </div>
       {!originalImage && (
          <div className="bg-slate-900/50 rounded-2xl p-4 sm:p-6 md:p-8 border border-slate-800 shadow-2xl shadow-black/30">
             <ImageDropzone onImageDrop={handleImageDrop} />

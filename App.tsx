@@ -8,13 +8,21 @@ import ImageUpscaler from './components/ImageUpscaler';
 import Gallery from './components/Gallery';
 import InstallPrompt from './components/InstallPrompt';
 import { GalleryProvider } from './contexts/GalleryContext';
-import Sidebar, { Mode } from './components/Sidebar';
+import { ToolChainProvider, useToolChain } from './contexts/ToolChainContext';
+import { Mode } from './components/Header';
 
-const App: React.FC = () => {
+
+const AppContent: React.FC = () => {
   const [mode, setMode] = useState<Mode>('generate');
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [showInstallPopup, setShowInstallPopup] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { chainState } = useToolChain();
+
+  useEffect(() => {
+    if (chainState) {
+      setMode(chainState.targetTool);
+    }
+  }, [chainState]);
 
   useEffect(() => {
     // PWA Install Prompt
@@ -69,37 +77,40 @@ const App: React.FC = () => {
   };
 
   return (
-    <GalleryProvider>
-      <div className="min-h-screen text-slate-100 font-sans flex">
-        <Sidebar 
-          currentMode={mode} 
-          onModeChange={setMode} 
-          isOpen={isSidebarOpen} 
-          setIsOpen={setIsSidebarOpen} 
+    <>
+      <div className="min-h-screen text-slate-100 font-sans flex flex-col">
+        <Header 
+          currentMode={mode}
+          onModeChange={setMode}
+          onInstallClick={handleInstallClick}
+          showInstallButton={!!installPrompt}
         />
-        <div className="flex-1 flex flex-col md:pl-64">
-          <Header 
-            onInstallClick={handleInstallClick}
-            showInstallButton={!!installPrompt}
-            onMenuClick={() => setIsSidebarOpen(true)}
-          />
-          <main className="flex flex-1 items-center justify-center p-4 md:p-8">
-            <div className="transition-opacity duration-300 w-full">
-              {mode === 'generate' && <ImageGenerator />}
-              {mode === 'edit' && <ImageEditor />}
-              {mode === 'remove' && <ObjectRemover />}
-              {mode === 'style' && <StyleTransfer />}
-              {mode === 'upscale' && <ImageUpscaler />}
-              {mode === 'gallery' && <Gallery />}
-            </div>
-          </main>
-        </div>
+        <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+          <div className="transition-opacity duration-300 w-full">
+            {mode === 'generate' && <ImageGenerator />}
+            {mode === 'edit' && <ImageEditor />}
+            {mode === 'remove' && <ObjectRemover />}
+            {mode === 'style' && <StyleTransfer />}
+            {mode === 'upscale' && <ImageUpscaler />}
+            {mode === 'gallery' && <Gallery />}
+          </div>
+        </main>
       </div>
       <InstallPrompt
         show={showInstallPopup}
         onInstall={handleInstallClick}
         onDismiss={handleDismissInstall}
        />
+    </>
+  );
+}
+
+const App: React.FC = () => {
+  return (
+    <GalleryProvider>
+      <ToolChainProvider>
+        <AppContent />
+      </ToolChainProvider>
     </GalleryProvider>
   );
 };
