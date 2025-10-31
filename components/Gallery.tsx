@@ -13,12 +13,12 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">My Gallery ({galleryItems.length})</h2>
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">My Gallery ({galleryItems.length})</h2>
         {galleryItems.length > 0 && (
           <button
             onClick={handleClearGallery}
-            className="px-5 py-2 bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-red-500 transition-all transform hover:scale-105"
+            className="px-4 sm:px-5 py-2 text-sm sm:text-base bg-gradient-to-r from-red-600 to-rose-500 hover:from-red-500 hover:to-rose-400 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-red-500 transition-all transform hover:scale-105"
           >
             Clear Gallery
           </button>

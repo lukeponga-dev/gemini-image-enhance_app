@@ -59,7 +59,7 @@ const ImageEditor: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto">
       {!originalImage && (
-         <div className="bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+         <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
             <ImageDropzone onImageDrop={handleImageDrop} />
          </div>
       )}
@@ -71,7 +71,7 @@ const ImageEditor: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+        <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
           {!editedImage && !isLoading ? (
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="flex flex-col items-center">

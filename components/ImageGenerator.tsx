@@ -36,7 +36,7 @@ const ImageGenerator: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+    <div className="max-w-4xl mx-auto bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="prompt-generator" className="block text-lg font-medium text-gray-200 mb-2">
@@ -81,7 +81,7 @@ const ImageGenerator: React.FC = () => {
         </div>
       </form>
       
-      <div className="mt-8 min-h-[24rem] flex items-center justify-center">
+      <div className="mt-8 min-h-[20rem] sm:min-h-[24rem] flex items-center justify-center">
         {isLoading && (
             <div className="flex flex-col items-center justify-center p-8 bg-gray-800/50 rounded-lg w-full h-96">
                 <Spinner />

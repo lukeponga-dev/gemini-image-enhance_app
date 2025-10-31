@@ -61,7 +61,7 @@ const StyleTransfer: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+    <div className="max-w-6xl mx-auto bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
       <div className="grid md:grid-cols-2 gap-8 mb-8">
         <div>
           <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Content Image</h3>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ImageEditor from './components/ImageEditor';
 import ImageGenerator from './components/ImageGenerator';
 import Header from './components/Header';
@@ -22,19 +22,51 @@ const modes: { id: Mode; label: string }[] = [
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<Mode>('generate');
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = () => {
+    if (!installPrompt) {
+      return;
+    }
+    installPrompt.prompt();
+    installPrompt.userChoice.then((choiceResult: { outcome: 'accepted' | 'dismissed' }) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setInstallPrompt(null);
+    });
+  };
 
   return (
     <GalleryProvider>
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 text-gray-100 font-sans">
-        <Header />
+        <Header 
+          onInstallClick={handleInstallClick}
+          showInstallButton={!!installPrompt}
+        />
         <main className="container mx-auto p-4 md:p-8">
           <div className="mb-8 flex justify-center">
-            <div className="bg-gray-800/60 p-1.5 rounded-full flex items-center space-x-1 overflow-x-auto">
+            <div className="bg-gray-800/60 p-1.5 rounded-full flex items-center space-x-1 overflow-x-auto no-scrollbar max-w-full">
               {modes.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => setMode(item.id)}
-                  className={`relative flex-shrink-0 px-4 py-2 text-sm sm:text-base font-medium transition-colors duration-300 outline-none rounded-full ${
+                  className={`relative flex-shrink-0 px-3 sm:px-4 py-1.5 sm:py-2 text-sm font-medium transition-colors duration-300 outline-none rounded-full ${
                     mode === item.id
                       ? 'text-white'
                       : 'text-gray-400 hover:text-white'

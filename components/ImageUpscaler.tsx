@@ -57,7 +57,7 @@ const ImageUpscaler: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto">
       {!originalImage && (
-        <div className="bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+        <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
             <h2 className="text-xl text-center font-semibold mb-4 text-gray-200">Automatically improve image quality</h2>
             <p className="text-center text-gray-400 mb-6">Upload a lower-quality image to enhance its resolution and details.</p>
             <ImageDropzone onImageDrop={handleImageDrop} />
@@ -71,7 +71,7 @@ const ImageUpscaler: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+        <div className="bg-gray-800/30 rounded-2xl p-4 sm:p-6 md:p-8 border border-gray-700/50 shadow-2xl">
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="flex flex-col items-center">
               <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Original Image</h3>
