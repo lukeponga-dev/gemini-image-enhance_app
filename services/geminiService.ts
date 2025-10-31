@@ -156,26 +156,45 @@ export const transferStyle = async (
   }
 };
 
+export type UpscaleStyle = 'balanced' | 'gentle' | 'ultra';
+
 /**
  * Upscales a low-resolution image.
  * @param imageBase64 The base64 encoded string of the image.
  * @param mimeType The MIME type of the image.
  * @param factor The upscaling factor (e.g., 2, 4, 8).
+ * @param style The enhancement style to apply.
  * @returns A promise that resolves to the base64 string of the upscaled image.
  */
 export const upscaleImage = async (
   imageBase64: string,
   mimeType: string,
-  factor: number
+  factor: number,
+  style: UpscaleStyle = 'balanced'
 ): Promise<string> => {
   try {
     const ai = getAiClient();
+    let prompt: string;
+
+    switch (style) {
+      case 'gentle':
+        prompt = `Gently upscale this image by ${factor}x. Enhance details subtly, preserve natural textures, and improve clarity without over-sharpening. The result should be smooth and clean, prioritizing a natural look.`;
+        break;
+      case 'ultra':
+        prompt = `Upscale this image by ${factor}x with maximum detail enhancement. Generate photorealistic textures and ultra-sharp focus. This is for high-end, professional quality results. Reconstruct fine details meticulously.`;
+        break;
+      case 'balanced':
+      default:
+        prompt = `Upscale this image by ${factor}x, enhancing details, improving clarity, and increasing the resolution significantly. Make it look like a high-quality photograph with a balanced approach to sharpness and naturalism.`;
+        break;
+    }
+
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
           { inlineData: { data: imageBase64, mimeType: mimeType } },
-          { text: `Upscale this image by ${factor}x, enhancing details, improving clarity, and increasing the resolution significantly. Make it look like a high-quality photograph.` },
+          { text: prompt },
         ],
       },
       config: {
