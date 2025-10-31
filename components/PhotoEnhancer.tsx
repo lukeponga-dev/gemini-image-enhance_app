@@ -13,6 +13,7 @@ const PhotoEnhancer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [scale, setScale] = useState<number>(2);
+  const [imageAspectRatio, setImageAspectRatio] = useState('1');
   const { consumeChainedImage } = useToolChain();
 
   useEffect(() => {
@@ -39,9 +40,16 @@ const PhotoEnhancer: React.FC = () => {
       setError('Invalid file type. Please upload a PNG, JPG, or WEBP image.');
       return;
     }
-    setOriginalImage({ file, url: URL.createObjectURL(file) });
+    const url = URL.createObjectURL(file);
+    setOriginalImage({ file, url });
     setResultImage(null);
     setError(null);
+
+    const img = new Image();
+    img.onload = () => {
+        setImageAspectRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
+    };
+    img.src = url;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,16 +81,17 @@ const PhotoEnhancer: React.FC = () => {
     setResultImage(null);
     setError(null);
     setScale(2);
+    setImageAspectRatio('1');
   };
 
   return (
     <div className="w-full max-w-5xl mx-auto">
        <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Photo Enhancer</h2>
-        <p className="mt-2 text-lg text-zinc-400">Improve quality, increase resolution, and enhance details automatically.</p>
+        <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">AI Photo Enhancer</h2>
+        <p className="mt-2 text-lg text-blue-300">Improve quality, increase resolution, and enhance details automatically.</p>
       </div>
       {!originalImage && (
-        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
+        <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
             <ImageDropzone onImageDrop={handleImageDrop} />
         </div>
       )}
@@ -94,23 +103,27 @@ const PhotoEnhancer: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
+        <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Original Image</h3>
+              <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Original Image</h3>
               <img src={originalImage.url} alt="Original for upscaling" className="rounded-lg shadow-lg max-w-full h-auto" />
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Enhanced Image</h3>
-              <div className="w-full aspect-square bg-zinc-900/80 rounded-lg flex items-center justify-center border border-zinc-700">
+              <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Enhanced Image</h3>
+              <div className="w-full">
                 {isLoading && (
-                  <div className="flex flex-col items-center text-center">
-                    <Spinner />
-                    <p className="mt-4 text-zinc-400">Enhancing image...</p>
+                  <div style={{ aspectRatio: imageAspectRatio }} className="w-full bg-blue-900/80 rounded-lg flex items-center justify-center border border-blue-700">
+                    <div className="flex flex-col items-center text-center">
+                        <Spinner />
+                        <p className="mt-4 text-blue-300">Enhancing image...</p>
+                    </div>
                   </div>
                 )}
                 {!isLoading && !resultImage && (
-                  <p className="text-zinc-500">Your enhanced image will appear here.</p>
+                  <div style={{ aspectRatio: imageAspectRatio }} className="w-full bg-blue-900/80 rounded-lg flex items-center justify-center border border-blue-700">
+                    <p className="text-blue-500">Your enhanced image will appear here.</p>
+                  </div>
                 )}
                 {resultImage && (
                    <div className="w-full animate-fade-in">
@@ -122,10 +135,10 @@ const PhotoEnhancer: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div>
-              <label className="block text-base font-medium text-zinc-300 mb-3 text-center">
+              <label className="block text-base font-medium text-blue-200 mb-3 text-center">
                 Select Enhancement Factor
               </label>
-              <div className="flex justify-center bg-zinc-800 p-1.5 rounded-full mx-auto max-w-xs border border-zinc-700">
+              <div className="flex justify-center bg-blue-800 p-1.5 rounded-full mx-auto max-w-xs border border-blue-700">
                 {[2, 4, 8].map(factor => (
                   <button
                     key={factor}
@@ -133,12 +146,12 @@ const PhotoEnhancer: React.FC = () => {
                     onClick={() => setScale(factor)}
                     disabled={isLoading}
                     title={`Set enhancement factor to ${factor}x`}
-                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 focus:ring-offset-zinc-900 ${
-                        scale === factor ? 'text-white' : 'text-zinc-300 hover:text-white'
+                    className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-blue-900 ${
+                        scale === factor ? 'text-white' : 'text-blue-200 hover:text-white'
                     }`}
                   >
                      {scale === factor && (
-                        <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full z-0"/>
+                        <span className="absolute inset-0 bg-gradient-to-r from-rose-600 to-pink-500 rounded-full z-0"/>
                      )}
                      <span className="relative z-10">{factor}x</span>
                   </button>

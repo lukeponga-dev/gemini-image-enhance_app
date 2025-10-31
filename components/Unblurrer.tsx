@@ -79,12 +79,12 @@ const Unblurrer: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Image Unblur</h2>
-        <p className="mt-2 text-lg text-zinc-400">Fix blurry photos and bring details into focus.</p>
+        <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">AI Image Unblur</h2>
+        <p className="mt-2 text-lg text-blue-300">Fix blurry photos and bring details into focus.</p>
       </div>
 
       {!originalImage && (
-        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
+        <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
            <ImageDropzone onImageDrop={handleImageDrop} />
         </div>
       )}
@@ -96,16 +96,16 @@ const Unblurrer: React.FC = () => {
       )}
 
       {originalImage && (
-        <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
+        <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
           {!resultImage && !isLoading ? (
              <div className="flex flex-col items-center">
-               <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Your Image</h3>
-               <img src={originalImage.url} alt="Original for unblur" className="rounded-lg shadow-lg max-w-md h-auto" />
+               <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Your Image</h3>
+               <img src={originalImage.url} alt="Original for unblur" className="rounded-lg shadow-lg max-w-full h-auto" />
              </div>
           ) : (
             <div className="animate-fade-in space-y-8">
               <div>
-                <h3 className="text-2xl font-semibold mb-4 text-center text-zinc-300">Compare Before & After</h3>
+                <h3 className="text-2xl font-semibold mb-4 text-center text-blue-200">Compare Before & After</h3>
                 <ImageComparator
                   before={originalImage.url}
                   after={resultImage || originalImage.url}
@@ -115,14 +115,14 @@ const Unblurrer: React.FC = () => {
               </div>
               {resultImage && (
                 <div>
-                  <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Final Result</h3>
+                  <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Final Result</h3>
                   <GeneratedImage src={resultImage} alt="Unblurred image" prompt="unblurred-image" />
                 </div>
               )}
                {isLoading && (
                   <div className="flex flex-col items-center text-center p-8">
                       <Spinner />
-                      <p className="mt-4 text-zinc-400">Bringing image into focus...</p>
+                      <p className="mt-4 text-blue-300">Bringing image into focus...</p>
                   </div>
                 )}
             </div>

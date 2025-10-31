@@ -13,7 +13,7 @@ export const EditorIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 export const RemoveIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 );
@@ -36,18 +36,6 @@ export const GalleryIcon: React.FC<{ className?: string }> = ({ className }) => 
     </svg>
 );
 
-export const AnalystIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-    </svg>
-);
-
-export const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-    </svg>
-);
-
 export const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -56,13 +44,13 @@ export const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 export const SparklesIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="currentColor">
-        <path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.321l5.478.399a.562.562 0 0 1 .313.952l-4.224 3.622a.563.563 0 0 0-.162.522l1.285 5.328a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0l-4.725 2.885a.562.562 0 0 1-.84-.61l1.285-5.328a.562.562 0 0 0-.162-.522L1.172 10.28a.562.562 0 0 1 .313-.952l5.478-.399a.563.563 0 0 0 .475-.321L11.48 3.5Z" />
+        <path d="M12 0L14.2426 9.75736L24 12L14.2426 14.2426L12 24L9.75736 14.2426L0 12L9.75736 9.75736L12 0Z" />
     </svg>
 );
 
 export const ToolsIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-1.007 1.11-1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 010 2.452c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 010-2.452c.55-.219 1.02-.684 1.11-1.226a2.25 2.25 0 012.553-1.226c.55-.219 1.02-.684 1.11-1.226a2.25 2.25 0 012.553-1.226zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-1.007 1.11-1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 010 2.452c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 010-2.452c.55-.219 1.02.684 1.11-1.226a2.25 2.25 0 012.553-1.226c.55-.219 1.02.684 1.11-1.226a2.25 2.25 0 012.553-1.226zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
 );
 
@@ -109,5 +97,19 @@ export const BgRemoverIcon: React.FC<{ className?: string }> = ({ className }) =
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
         <path strokeLinecap="round" strokeLinejoin="round" strokeDasharray="2 2" d="M12 12.75a4 4 0 00-4 4v.25a1 1 0 001 1h6a1 1 0 001-1v-.25a4 4 0 00-4-4z" transform="translate(0, 1.5)" />
+    </svg>
+);
+
+// FIX: Add AnalystIcon for Pro Analyst tool.
+export const AnalystIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+    </svg>
+);
+
+// FIX: Add ChatIcon for the Chatbot component.
+export const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
     </svg>
 );

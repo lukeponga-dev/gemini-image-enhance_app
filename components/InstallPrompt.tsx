@@ -26,19 +26,19 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ show, onInstall, onDismis
       }`}
     >
       <div className="container mx-auto max-w-lg">
-        <div className="bg-zinc-800/80 backdrop-blur-lg rounded-xl shadow-2xl p-4 flex items-center justify-between gap-4 border border-zinc-700/50">
+        <div className="bg-blue-800/80 backdrop-blur-lg rounded-xl shadow-2xl p-4 flex items-center justify-between gap-4 border border-blue-700/50">
             <div className="flex items-center gap-4">
                  <img src="/icon-192.svg" alt="App Icon" className="w-12 h-12 hidden sm:block" />
                  <div>
                     <p className="font-bold text-white">Get the Full Experience</p>
-                    <p className="text-sm text-zinc-300">Install our app for quick access from your home screen.</p>
+                    <p className="text-sm text-blue-200">Install our app for quick access from your home screen.</p>
                  </div>
             </div>
             <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                     onClick={onInstall}
                     title="Install this app on your device"
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-600 to-violet-500 hover:from-purple-700 hover:to-violet-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-zinc-900 focus:ring-violet-500 transition-all transform hover:scale-105 text-sm"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-600 to-pink-500 hover:from-rose-700 hover:to-pink-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-900 focus:ring-rose-500 transition-all transform hover:scale-105 text-sm"
                 >
                     <InstallIcon className="w-4 h-4" />
                     <span>Install</span>
@@ -46,7 +46,7 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ show, onInstall, onDismis
                 <button 
                     onClick={onDismiss} 
                     title="Dismiss this notification"
-                    className="p-2 rounded-full text-zinc-400 hover:bg-zinc-700/50 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-600"
+                    className="p-2 rounded-full text-blue-300 hover:bg-blue-700/50 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600"
                 >
                     <CloseIcon className="w-5 h-5" />
                 </button>

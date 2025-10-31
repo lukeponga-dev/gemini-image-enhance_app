@@ -5,8 +5,6 @@ import ObjectRemover from './components/ObjectRemover';
 import StyleTransfer from './components/StyleTransfer';
 import PhotoEnhancer from './components/PhotoEnhancer';
 import Gallery from './components/Gallery';
-import ProAnalyst from './components/ProAnalyst';
-import Chatbot from './components/Chatbot';
 import Sidebar, { Mode } from './components/Sidebar';
 import Header from './components/Header';
 import Notification from './components/Notification';
@@ -19,6 +17,8 @@ import BackgroundRemover from './components/BackgroundRemover';
 import Unblurrer from './components/Unblurrer';
 import Upscaler8K from './components/Upscaler8K';
 import PhotoRestorer from './components/PhotoRestorer';
+// FIX: Import ProAnalyst to handle the 'analyst' mode.
+import ProAnalyst from './components/ProAnalyst';
 
 // PWA Install prompt event type
 interface BeforeInstallPromptEvent extends Event {
@@ -70,7 +70,8 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'analyst', 'chat', 'unblur', 'upscale8k', 'restore', 'bg-remover'];
+      // FIX: Add 'analyst' to the list of valid modes.
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'unblur', 'upscale8k', 'restore', 'bg-remover', 'analyst'];
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -85,18 +86,18 @@ const AppContent: React.FC = () => {
       case 'style': return <StyleTransfer />;
       case 'enhancer': return <PhotoEnhancer />;
       case 'gallery': return <Gallery />;
-      case 'analyst': return <ProAnalyst />;
-      case 'chat': return <Chatbot />;
       case 'unblur': return <Unblurrer />;
       case 'upscale8k': return <Upscaler8K />;
       case 'restore': return <PhotoRestorer />;
       case 'bg-remover': return <BackgroundRemover />;
+      // FIX: Add a case to render the ProAnalyst component for the 'analyst' mode.
+      case 'analyst': return <ProAnalyst />;
       default: return <PhotoEnhancer />;
     }
   }
 
   return (
-    <div className="min-h-screen text-zinc-100 font-sans flex bg-zinc-950">
+    <div className="min-h-screen text-blue-50 font-sans flex bg-blue-950">
         <Sidebar 
             currentMode={mode}
             onModeChange={setMode}

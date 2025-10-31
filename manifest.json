@@ -1,7 +1,7 @@
 {
-  "name": "Gemini Image Enhancer",
-  "short_name": "Image Enhancer",
-  "description": "An AI-powered application to generate and edit images using natural language commands. Powered by Google Gemini.",
+  "name": "Lets Enhance",
+  "short_name": "Enhance",
+  "description": "An AI-powered application to enhance, generate, and edit images using natural language commands. Powered by Google Gemini.",
   "icons": [
     {
       "src": "icon-192.svg",
@@ -22,6 +22,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#0f172a",
-  "background_color": "#020617"
+  "theme_color": "#1e3a8a",
+  "background_color": "#172554"
 }

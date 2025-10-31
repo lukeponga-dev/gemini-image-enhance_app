@@ -94,13 +94,13 @@ const StyleTransfer: React.FC = () => {
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Style Transfer</h2>
-        <p className="mt-2 text-lg text-zinc-400">Combine the style of one image with the content of another.</p>
+        <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">AI Style Transfer</h2>
+        <p className="mt-2 text-lg text-blue-300">Combine the style of one image with the content of another.</p>
       </div>
-      <div className="bg-zinc-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-zinc-800 shadow-2xl shadow-black/30">
+      <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
         <div className="grid md:grid-cols-2 gap-8 mb-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Content Image</h3>
+            <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Content Image</h3>
             {contentImage ? (
               <img src={contentImage.url} alt="Content" className="rounded-lg shadow-lg w-full h-auto" />
             ) : (
@@ -108,7 +108,7 @@ const StyleTransfer: React.FC = () => {
             )}
           </div>
           <div>
-            <h3 className="text-xl font-semibold mb-4 text-center text-zinc-300">Style Image</h3>
+            <h3 className="text-xl font-semibold mb-4 text-center text-blue-200">Style Image</h3>
             {styleImage ? (
               <img src={styleImage.url} alt="Style" className="rounded-lg shadow-lg w-full h-auto" />
             ) : (
@@ -139,12 +139,12 @@ const StyleTransfer: React.FC = () => {
 
         {(isLoading || resultImage) && (
           <div className="animate-fade-in">
-            <h3 className="text-2xl font-semibold mb-4 text-center text-zinc-300">Result</h3>
+            <h3 className="text-2xl font-semibold mb-4 text-center text-blue-200">Result</h3>
             <div className="max-w-2xl mx-auto flex items-center justify-center">
               {isLoading && (
                 <div className="flex flex-col items-center text-center p-8">
                   <Spinner />
-                  <p className="mt-4 text-zinc-400">Applying style...</p>
+                  <p className="mt-4 text-blue-300">Applying style...</p>
                 </div>
               )}
               {resultImage && (

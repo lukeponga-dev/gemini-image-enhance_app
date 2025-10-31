@@ -22,9 +22,9 @@ const Notification: React.FC<NotificationProps> = ({ message }) => {
         isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0 pointer-events-none'
       }`}
     >
-      <div className="bg-zinc-800/80 backdrop-blur-lg rounded-full shadow-2xl p-1 flex items-center justify-between gap-4 border border-zinc-700/50">
+      <div className="bg-blue-800/80 backdrop-blur-lg rounded-full shadow-2xl p-1 flex items-center justify-between gap-4 border border-blue-700/50">
         <div className="flex items-center gap-3">
-          <div className="bg-gradient-to-r from-purple-600 to-violet-500 rounded-full p-2">
+          <div className="bg-gradient-to-r from-rose-600 to-pink-500 rounded-full p-2">
             <SparklesIcon className="w-5 h-5 text-white" />
           </div>
           <p className="font-semibold text-white text-sm pr-4">{message}</p>

@@ -1,16 +1,12 @@
 <svg width="192" height="192" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="192" height="192" rx="24" fill="url(#paint0_linear_192)"/>
-<g transform="translate(24 24) scale(6)">
-  <path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.321l5.478.399a.562.562 0 0 1 .313.952l-4.224 3.622a.563.563 0 0 0-.162.522l1.285 5.328a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0l-4.725 2.885a.562.562 0 0 1-.84-.61l1.285-5.328a.562.562 0 0 0-.162-.522L1.172 10.28a.562.562 0 0 1 .313-.952l5.478-.399a.563.563 0 0 0 .475-.321L11.48 3.5Z" fill="url(#paint1_linear_192)" />
+<rect width="192" height="192" rx="24" fill="#172554"/>
+<g transform="translate(48 48) scale(4)">
+  <path d="M12 0L14.2426 9.75736L24 12L14.2426 14.2426L12 24L9.75736 14.2426L0 12L9.75736 9.75736L12 0Z" fill="url(#paint0_linear_192)"/>
 </g>
 <defs>
-<linearGradient id="paint0_linear_192" x1="0" y1="0" x2="192" y2="192" gradientUnits="userSpaceOnUse">
-<stop stop-color="#020617"/>
-<stop offset="1" stop-color="#0f172a"/>
-</linearGradient>
-<linearGradient id="paint1_linear_192" x1="12" y1="3.5" x2="12" y2="20.5" gradientUnits="userSpaceOnUse">
-<stop stop-color="#2563eb"/>
-<stop offset="1" stop-color="#22d3ee"/>
+<linearGradient id="paint0_linear_192" x1="0" y1="12" x2="24" y2="12" gradientUnits="userSpaceOnUse">
+<stop stop-color="#f43f5e"/>
+<stop offset="1" stop-color="#d946ef"/>
 </linearGradient>
 </defs>
 </svg>
