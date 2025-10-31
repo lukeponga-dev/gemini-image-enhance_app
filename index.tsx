@@ -13,19 +13,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    // In some sandboxed environments, relative paths for the service worker can resolve
-    // to an incorrect origin. To prevent this, we construct an absolute URL using
-    // window.location.origin, which reliably provides the correct execution context.
-    const swUrl = `${window.location.origin}/sw.js`;
-    navigator.serviceWorker.register(swUrl)
-      .then(registration => {
-        console.log('Service Worker registration successful with scope: ', registration.scope);
-      })
-      .catch(err => {
-        console.error('Service Worker registration failed: ', err);
-      });
-  });
-}

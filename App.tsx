@@ -25,12 +25,26 @@ const App: React.FC = () => {
   const [installPrompt, setInstallPrompt] = useState<any>(null);
 
   useEffect(() => {
+    // PWA Install Prompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setInstallPrompt(e);
     };
-
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swUrl = `${window.location.origin}/sw.js`;
+        navigator.serviceWorker.register(swUrl)
+          .then(registration => {
+            console.log('Service Worker registration successful with scope: ', registration.scope);
+          })
+          .catch(err => {
+            console.error('Service Worker registration failed: ', err);
+          });
+      });
+    }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
