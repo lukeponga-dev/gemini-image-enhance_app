@@ -37,12 +37,17 @@ const InstallPrompt: React.FC<InstallPromptProps> = ({ show, onInstall, onDismis
             <div className="flex items-center gap-2 flex-shrink-0">
                 <button
                     onClick={onInstall}
+                    title="Install this app on your device"
                     className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 transition-all transform hover:scale-105 text-sm"
                 >
                     <InstallIcon className="w-4 h-4" />
                     <span>Install</span>
                 </button>
-                <button onClick={onDismiss} className="p-2 rounded-full text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-600">
+                <button 
+                    onClick={onDismiss} 
+                    title="Dismiss this notification"
+                    className="p-2 rounded-full text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-600"
+                >
                     <CloseIcon className="w-5 h-5" />
                 </button>
             </div>

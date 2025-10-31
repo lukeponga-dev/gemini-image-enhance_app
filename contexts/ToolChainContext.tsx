@@ -1,5 +1,5 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { Mode } from '../components/Header';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { Mode } from '../components/Sidebar';
 
 export interface ChainedImage {
   dataUrl: string;
@@ -13,7 +13,8 @@ export interface ChainState {
 
 interface ToolChainContextType {
   chainState: ChainState | null;
-  sendImageToTool: (image: ChainedImage, tool: Mode) => void;
+  notification: string | null;
+  sendImageToTool: (image: ChainedImage, tool: Mode, message?: string) => void;
   consumeChainedImage: () => ChainState | null;
 }
 
@@ -21,9 +22,31 @@ const ToolChainContext = createContext<ToolChainContextType | undefined>(undefin
 
 export const ToolChainProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [chainState, setChainState] = useState<ChainState | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
+  // Fix: Use ReturnType<typeof setTimeout> for browser compatibility instead of NodeJS.Timeout.
+  const [notificationTimeout, setNotificationTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
-  const sendImageToTool = (image: ChainedImage, tool: Mode) => {
+  useEffect(() => {
+    // Cleanup timeout on unmount
+    return () => {
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+    }
+  }, [notificationTimeout]);
+
+  const sendImageToTool = (image: ChainedImage, tool: Mode, message?: string) => {
     setChainState({ image, targetTool: tool });
+    if (message) {
+        if (notificationTimeout) {
+            clearTimeout(notificationTimeout);
+        }
+        setNotification(message);
+        const timeout = setTimeout(() => {
+            setNotification(null);
+        }, 3000); // Notification visible for 3 seconds
+        setNotificationTimeout(timeout);
+    }
   };
 
   const consumeChainedImage = (): ChainState | null => {
@@ -34,7 +57,7 @@ export const ToolChainProvider: React.FC<{ children: ReactNode }> = ({ children 
   };
 
   return (
-    <ToolChainContext.Provider value={{ chainState, sendImageToTool, consumeChainedImage }}>
+    <ToolChainContext.Provider value={{ chainState, notification, sendImageToTool, consumeChainedImage }}>
       {children}
     </ToolChainContext.Provider>
   );

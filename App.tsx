@@ -1,107 +1,113 @@
 import React, { useState, useEffect } from 'react';
 import ImageEditor from './components/ImageEditor';
 import ImageGenerator from './components/ImageGenerator';
-import Header from './components/Header';
 import ObjectRemover from './components/ObjectRemover';
 import StyleTransfer from './components/StyleTransfer';
 import ImageUpscaler from './components/ImageUpscaler';
 import Gallery from './components/Gallery';
+import ProAnalyst from './components/ProAnalyst';
+import Tools from './components/Tools';
+import Sidebar, { Mode } from './components/Sidebar';
+import BottomNavBar from './components/BottomNavBar';
+import Notification from './components/Notification';
 import InstallPrompt from './components/InstallPrompt';
 import { GalleryProvider } from './contexts/GalleryContext';
 import { ToolChainProvider, useToolChain } from './contexts/ToolChainContext';
-import { Mode } from './components/Header';
+
+// PWA Install prompt event type
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed';
+    platform: string;
+  }>;
+  prompt(): Promise<void>;
+}
 
 
 const AppContent: React.FC = () => {
   const [mode, setMode] = useState<Mode>('generate');
-  const [installPrompt, setInstallPrompt] = useState<any>(null);
-  const [showInstallPopup, setShowInstallPopup] = useState(false);
-  const { chainState } = useToolChain();
+  const { chainState, notification } = useToolChain();
+  
+  const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
 
   useEffect(() => {
-    if (chainState) {
-      setMode(chainState.targetTool);
-    }
-  }, [chainState]);
-
-  useEffect(() => {
-    // PWA Install Prompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      // Show prompt only if it hasn't been dismissed in the current session
-      if (!sessionStorage.getItem('installPromptDismissed')) {
-          setInstallPrompt(e);
-          setShowInstallPopup(true);
+      setInstallEvent(e as BeforeInstallPromptEvent);
+      // Show prompt only if it hasn't been dismissed before in this session
+      if (!sessionStorage.getItem('pwa_install_dismissed')) {
+        setShowInstallPrompt(true);
       }
     };
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        const swUrl = `${window.location.origin}/sw.js`;
-        navigator.serviceWorker.register(swUrl)
-          .then(registration => {
-            console.log('Service Worker registration successful with scope: ', registration.scope);
-          })
-          .catch(err => {
-            console.error('Service Worker registration failed: ', err);
-          });
-      });
-    }
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   }, []);
 
-  const handleInstallClick = () => {
-    if (!installPrompt) {
-      return;
-    }
-    installPrompt.prompt();
-    setShowInstallPopup(false); // Hide our custom popup
-    installPrompt.userChoice.then((choiceResult: { outcome: 'accepted' | 'dismissed' }) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt');
-      } else {
-        console.log('User dismissed the install prompt');
-      }
-      setInstallPrompt(null);
+  const handleInstall = () => {
+    if (!installEvent) return;
+    installEvent.prompt();
+    installEvent.userChoice.then(() => {
+      setInstallEvent(null);
+      setShowInstallPrompt(false);
     });
   };
 
   const handleDismissInstall = () => {
-    setShowInstallPopup(false);
-    sessionStorage.setItem('installPromptDismissed', 'true');
+    setShowInstallPrompt(false);
+    sessionStorage.setItem('pwa_install_dismissed', 'true');
   };
 
+
+  useEffect(() => {
+    if (chainState) {
+      // Ensure the target tool from the chain is a valid mode.
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'analyst', 'tools'];
+      if(validModes.includes(chainState.targetTool as Mode)) {
+        setMode(chainState.targetTool as Mode);
+      }
+    }
+  }, [chainState]);
+
+  const renderContent = () => {
+    switch (mode) {
+      case 'generate': return <ImageGenerator />;
+      case 'edit': return <ImageEditor />;
+      case 'remove': return <ObjectRemover />;
+      case 'style': return <StyleTransfer />;
+      case 'upscale': return <ImageUpscaler />;
+      case 'gallery': return <Gallery />;
+      case 'analyst': return <ProAnalyst />;
+      case 'tools': return <Tools onModeChange={setMode} />;
+      default: return <ImageGenerator />;
+    }
+  }
+
   return (
-    <>
-      <div className="min-h-screen text-slate-100 font-sans flex flex-col">
-        <Header 
-          currentMode={mode}
-          onModeChange={setMode}
-          onInstallClick={handleInstallClick}
-          showInstallButton={!!installPrompt}
+    <div className="min-h-screen text-slate-100 font-sans flex bg-slate-950">
+        <Sidebar 
+            currentMode={mode}
+            onModeChange={setMode}
         />
-        <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
-          <div className="transition-opacity duration-300 w-full">
-            {mode === 'generate' && <ImageGenerator />}
-            {mode === 'edit' && <ImageEditor />}
-            {mode === 'remove' && <ObjectRemover />}
-            {mode === 'style' && <StyleTransfer />}
-            {mode === 'upscale' && <ImageUpscaler />}
-            {mode === 'gallery' && <Gallery />}
-          </div>
-        </main>
-      </div>
-      <InstallPrompt
-        show={showInstallPopup}
-        onInstall={handleInstallClick}
-        onDismiss={handleDismissInstall}
-       />
-    </>
+        <div className="flex-1 flex flex-col md:ml-64">
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pb-24 md:pb-8">
+              <div className="transition-opacity duration-300 w-full">
+                {renderContent()}
+              </div>
+            </main>
+        </div>
+        <BottomNavBar
+            currentMode={mode}
+            onModeChange={setMode}
+        />
+        <Notification message={notification} />
+        <InstallPrompt 
+            show={showInstallPrompt} 
+            onInstall={handleInstall}
+            onDismiss={handleDismissInstall}
+        />
+    </div>
   );
 }
 

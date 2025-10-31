@@ -83,6 +83,7 @@ const ImageComparator: React.FC<ImageComparatorProps> = ({ before, after, before
         style={{ left: `${sliderPosition}%` }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
+        title="Drag to compare before and after"
       >
         <div
           className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 h-10 w-10 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full flex items-center justify-center shadow-lg cursor-ew-resize border-2 border-white/50 transition-transform duration-200 group-hover:scale-110"

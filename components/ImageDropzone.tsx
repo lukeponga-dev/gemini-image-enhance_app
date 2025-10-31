@@ -53,6 +53,7 @@ const ImageDropzone: React.FC<ImageDropzoneProps> = ({ onImageDrop }) => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
       onClick={openFileDialog}
+      title="Click or drag and drop an image file here"
       className={`relative w-full p-8 border-2 border-dashed rounded-lg text-center cursor-pointer transition-all duration-300 ${isDragging ? 'border-cyan-400 bg-slate-800/50 scale-105 shadow-2xl shadow-cyan-500/10' : 'border-slate-700 hover:border-slate-600 bg-transparent'}`}
     >
       <input

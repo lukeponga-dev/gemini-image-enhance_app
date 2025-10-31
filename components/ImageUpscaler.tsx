@@ -132,6 +132,7 @@ const ImageUpscaler: React.FC = () => {
                     type="button"
                     onClick={() => setScale(factor)}
                     disabled={isLoading}
+                    title={`Set enhancement factor to ${factor}x`}
                     className={`relative w-full py-2 text-sm font-semibold rounded-full transition-colors duration-300 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 ${
                         scale === factor ? 'text-white' : 'text-slate-300 hover:text-white'
                     }`}
@@ -150,10 +151,10 @@ const ImageUpscaler: React.FC = () => {
               </div>
             )}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
-              <Button type="submit" isLoading={isLoading} className="w-full sm:w-auto">
+              <Button type="submit" isLoading={isLoading} className="w-full sm:w-auto" title="Increase the image resolution and quality">
                 Enhance Image
               </Button>
-               <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto">
+               <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto" title="Start over with a different image">
                 Upload New Image
               </Button>
             </div>

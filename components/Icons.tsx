@@ -36,6 +36,13 @@ export const GalleryIcon: React.FC<{ className?: string }> = ({ className }) => 
     </svg>
 );
 
+// FIX: Add ChatIcon for use in Chatbot component
+export const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+    </svg>
+);
+
 export const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -48,6 +55,20 @@ export const SparklesIcon: React.FC<{ className?: string }> = ({ className }) =>
     </svg>
 );
 
+export const AnalystIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6a7.5 7.5 0 100 15 7.5 7.5 0 000-15zM21 21l-5.197-5.197" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 7.5v3.75m0 0H15m-3.75 0H7.5" />
+    </svg>
+);
+
+export const ToolsIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.594 3.94c.09-.542.56-1.007 1.11-1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 012.553 1.226c.09.542.56 1.007 1.11 1.226a2.25 2.25 0 010 2.452c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553 1.226c-.55.219-1.02.684-1.11 1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 01-2.553-1.226c-.09-.542-.56-1.007-1.11-1.226a2.25 2.25 0 010-2.452c.55-.219 1.02-.684 1.11-1.226a2.25 2.25 0 012.553-1.226c.55-.219 1.02-.684 1.11-1.226a2.25 2.25 0 012.553-1.226zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>
+);
+
+
 export const SendToIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
@@ -57,5 +78,11 @@ export const SendToIcon: React.FC<{ className?: string }> = ({ className }) => (
 export const ChevronDownIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+);
+
+export const MenuIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
     </svg>
 );

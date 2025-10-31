@@ -154,10 +154,10 @@ const ImageEditor: React.FC = () => {
                 </div>
             )}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-                 <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} className="w-full sm:w-auto">
+                 <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} className="w-full sm:w-auto" title="Apply the described edits to your image">
                     Generate Edit
                 </Button>
-                <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto">
+                <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto" title="Start over with a different image">
                     Upload New Image
                 </Button>
             </div>

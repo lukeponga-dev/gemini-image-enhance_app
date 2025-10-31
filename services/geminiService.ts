@@ -7,7 +7,7 @@ if (!process.env.API_KEY) {
   console.warn("API_KEY environment variable not set. App will not function correctly.");
 }
 
-const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
+export const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 
 /**
@@ -174,3 +174,25 @@ export const upscaleImage = async (
     throw new Error("Failed to upscale image.");
   }
 };
+
+/**
+ * Gets a response for a complex prompt using the Pro model with thinking budget.
+ * @param prompt The complex text prompt.
+ * @returns A promise that resolves to the string response from the model.
+ */
+export const getProResponse = async (prompt: string): Promise<string> => {
+    try {
+      const ai = getAiClient();
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-pro",
+        contents: prompt,
+        config: {
+          thinkingConfig: { thinkingBudget: 32768 },
+        },
+      });
+      return response.text;
+    } catch (error) {
+      console.error("Error getting Pro response:", error);
+      throw new Error("Failed to get response from the Pro model. Please check your query and try again.");
+    }
+  };

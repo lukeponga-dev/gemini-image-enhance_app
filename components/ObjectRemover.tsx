@@ -155,10 +155,10 @@ const ObjectRemover: React.FC = () => {
               </div>
             )}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-              <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} className="w-full sm:w-auto">
+              <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} className="w-full sm:w-auto" title="Remove the specified object from the image">
                 Remove Object
               </Button>
-              <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto">
+              <Button type="button" onClick={resetState} variant="secondary" className="w-full sm:w-auto" title="Start over with a different image">
                 Upload New Image
               </Button>
             </div>

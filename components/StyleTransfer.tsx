@@ -115,7 +115,7 @@ const StyleTransfer: React.FC = () => {
 
         {contentImage && styleImage && (
           <div className="text-center my-8">
-            <Button onClick={handleSubmit} isLoading={isLoading} disabled={!contentImage || !styleImage}>
+            <Button onClick={handleSubmit} isLoading={isLoading} disabled={!contentImage || !styleImage} title="Apply the style image's aesthetic to the content image">
               Transfer Style
             </Button>
           </div>

@@ -22,6 +22,7 @@ const Gallery: React.FC = () => {
           <div className="flex justify-center mb-8">
             <button
               onClick={handleClearGallery}
+              title="Permanently delete all images from your gallery"
               className="px-5 py-2 text-sm bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white font-semibold rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-red-500 transition-all transform hover:scale-105"
             >
               Clear Gallery

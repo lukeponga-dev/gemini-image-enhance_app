@@ -69,6 +69,7 @@ const ImageGenerator: React.FC = () => {
                   type="button"
                   onClick={() => setAspectRatio(ratio)}
                   disabled={isLoading}
+                  title={`Set aspect ratio to ${ratio}`}
                   className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-slate-900 transform hover:scale-105 ${
                       aspectRatio === ratio ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md' : 'bg-slate-700/80 text-slate-300 hover:bg-slate-700'
                   }`}
@@ -80,7 +81,7 @@ const ImageGenerator: React.FC = () => {
           </div>
 
           <div className="text-center pt-2">
-              <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()}>
+              <Button type="submit" isLoading={isLoading} disabled={!prompt.trim()} title="Create a new image based on your prompt">
                   Generate Image
               </Button>
           </div>
