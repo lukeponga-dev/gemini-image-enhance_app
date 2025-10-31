@@ -6,6 +6,7 @@ import ObjectRemover from './components/ObjectRemover';
 import StyleTransfer from './components/StyleTransfer';
 import ImageUpscaler from './components/ImageUpscaler';
 import Gallery from './components/Gallery';
+import InstallPrompt from './components/InstallPrompt';
 import { GalleryProvider } from './contexts/GalleryContext';
 
 type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'upscale' | 'gallery';
@@ -23,12 +24,17 @@ const modes: { id: Mode; label: string }[] = [
 const App: React.FC = () => {
   const [mode, setMode] = useState<Mode>('generate');
   const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [showInstallPopup, setShowInstallPopup] = useState(false);
 
   useEffect(() => {
     // PWA Install Prompt
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      setInstallPrompt(e);
+      // Show prompt only if it hasn't been dismissed in the current session
+      if (!sessionStorage.getItem('installPromptDismissed')) {
+          setInstallPrompt(e);
+          setShowInstallPopup(true);
+      }
     };
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
 
@@ -56,6 +62,7 @@ const App: React.FC = () => {
       return;
     }
     installPrompt.prompt();
+    setShowInstallPopup(false); // Hide our custom popup
     installPrompt.userChoice.then((choiceResult: { outcome: 'accepted' | 'dismissed' }) => {
       if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the install prompt');
@@ -64,6 +71,11 @@ const App: React.FC = () => {
       }
       setInstallPrompt(null);
     });
+  };
+
+  const handleDismissInstall = () => {
+    setShowInstallPopup(false);
+    sessionStorage.setItem('installPromptDismissed', 'true');
   };
 
   return (
@@ -110,6 +122,11 @@ const App: React.FC = () => {
           </div>
         </main>
       </div>
+      <InstallPrompt
+        show={showInstallPopup}
+        onInstall={handleInstallClick}
+        onDismiss={handleDismissInstall}
+       />
     </GalleryProvider>
   );
 };
