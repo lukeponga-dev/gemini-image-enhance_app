@@ -9,7 +9,7 @@ import Sidebar, { Mode } from './components/Sidebar';
 import Header from './components/Header';
 import Notification from './components/Notification';
 import InstallPrompt from './components/InstallPrompt';
-import { GalleryProvider } from './contexts/GalleryContext';
+import { GalleryProvider, useGallery } from './contexts/GalleryContext';
 import { ToolChainProvider, useToolChain } from './contexts/ToolChainContext';
 
 // New components for specialized tasks
@@ -34,7 +34,8 @@ interface BeforeInstallPromptEvent extends Event {
 const AppContent: React.FC = () => {
   const [mode, setMode] = useState<Mode>('enhancer');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { chainState, notification } = useToolChain();
+  const { chainState, notification: toolChainNotification } = useToolChain();
+  const { galleryNotification } = useGallery();
   
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
@@ -89,12 +90,14 @@ const AppContent: React.FC = () => {
       case 'unblur': return <Unblurrer />;
       case 'upscale8k': return <Upscaler8K />;
       case 'restore': return <PhotoRestorer />;
-      case 'bg-remover': return <BackgroundRemover />;
       // FIX: Add a case to render the ProAnalyst component for the 'analyst' mode.
       case 'analyst': return <ProAnalyst />;
       default: return <PhotoEnhancer />;
     }
   }
+
+  // Determine which notification to show
+  const activeNotification = toolChainNotification || galleryNotification;
 
   return (
     <div className="min-h-screen text-blue-50 font-sans flex bg-blue-950">
@@ -112,7 +115,7 @@ const AppContent: React.FC = () => {
               </div>
             </main>
         </div>
-        <Notification message={notification} />
+        <Notification message={activeNotification} />
         <InstallPrompt 
             show={showInstallPrompt} 
             onInstall={handleInstall}
