@@ -15,7 +15,7 @@ const modes: { id: Mode; label: string }[] = [
   { id: 'edit', label: 'Editor' },
   { id: 'remove', label: 'Object Remover' },
   { id: 'style', label: 'Style Transfer' },
-  { id: 'upscale', label: 'Upscaler' },
+  { id: 'upscale', label: 'Enhancer' },
   { id: 'gallery', label: 'My Gallery' },
 ];
 

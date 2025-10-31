@@ -26,7 +26,7 @@ const ImageUpscaler: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!originalImage) {
-      setError('Please upload an image to upscale.');
+      setError('Please upload an image to enhance.');
       return;
     }
     setIsLoading(true);
@@ -58,6 +58,8 @@ const ImageUpscaler: React.FC = () => {
     <div className="max-w-5xl mx-auto">
       {!originalImage && (
         <div className="bg-gray-800/30 rounded-2xl p-6 md:p-8 border border-gray-700/50 shadow-2xl">
+            <h2 className="text-xl text-center font-semibold mb-4 text-gray-200">Automatically improve image quality</h2>
+            <p className="text-center text-gray-400 mb-6">Upload a lower-quality image to enhance its resolution and details.</p>
             <ImageDropzone onImageDrop={handleImageDrop} />
         </div>
       )}
@@ -76,7 +78,7 @@ const ImageUpscaler: React.FC = () => {
               <img src={originalImage.url} alt="Original for upscaling" className="rounded-lg shadow-lg max-w-full h-auto" />
             </div>
             <div className="flex flex-col items-center">
-              <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Upscaled Image</h3>
+              <h3 className="text-xl font-semibold mb-4 text-center text-gray-300">Enhanced Image</h3>
               <div className="w-full aspect-square bg-gray-900/50 rounded-lg flex items-center justify-center border border-gray-700">
                 {isLoading && (
                   <div className="flex flex-col items-center text-center">
@@ -85,11 +87,11 @@ const ImageUpscaler: React.FC = () => {
                   </div>
                 )}
                 {!isLoading && !resultImage && (
-                  <p className="text-gray-500">Your upscaled image will appear here.</p>
+                  <p className="text-gray-500">Your enhanced image will appear here.</p>
                 )}
                 {resultImage && (
                    <div className="w-full animate-fade-in">
-                    <GeneratedImage src={resultImage} alt={`Upscaled image at ${scale}x`} prompt={`upscaled-image-${scale}x`} />
+                    <GeneratedImage src={resultImage} alt={`Enhanced image at ${scale}x`} prompt={`enhanced-image-${scale}x`} />
                    </div>
                 )}
               </div>
@@ -98,7 +100,7 @@ const ImageUpscaler: React.FC = () => {
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div>
               <label className="block text-base font-medium text-gray-300 mb-3 text-center">
-                Select Upscale Factor
+                Select Enhancement Factor
               </label>
               <div className="flex justify-center bg-gray-900/50 p-1.5 rounded-full mx-auto max-w-xs">
                 {[2, 4, 8].map(factor => (
@@ -126,7 +128,7 @@ const ImageUpscaler: React.FC = () => {
             )}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
               <Button type="submit" isLoading={isLoading} className="w-full sm:w-auto">
-                Upscale Image
+                Enhance Image
               </Button>
               <button type="button" onClick={resetState} className="w-full sm:w-auto px-6 py-3 border border-gray-600/80 text-base font-medium rounded-md shadow-sm text-gray-300 bg-gray-700/50 hover:bg-gray-700 transition-colors">
                 Upload New Image
