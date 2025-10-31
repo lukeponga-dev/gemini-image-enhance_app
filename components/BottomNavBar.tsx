@@ -1,12 +1,14 @@
 import React from 'react';
 import { Mode } from './Sidebar';
-import { SparklesIcon, EditorIcon, GeneratorIcon, ToolsIcon, GalleryIcon } from './Icons';
+import { SparklesIcon, EditorIcon, GeneratorIcon, RemoveIcon, GalleryIcon } from './Icons';
 
 const navItems: { id: Mode; label: string; icon: React.FC<{ className?: string }> }[] = [
-  { id: 'upscale', label: 'Enhance', icon: SparklesIcon },
+  // FIX: Changed 'upscale' to 'enhancer' to match a valid Mode.
+  { id: 'enhancer', label: 'Enhance', icon: SparklesIcon },
   { id: 'edit', label: 'Editor', icon: EditorIcon },
   { id: 'generate', label: 'Generate', icon: GeneratorIcon },
-  { id: 'tools', label: 'Tools', icon: ToolsIcon },
+  // FIX: Replaced invalid 'tools' mode with 'remove' and updated label and icon.
+  { id: 'remove', label: 'Remove', icon: RemoveIcon },
   { id: 'gallery', label: 'Gallery', icon: GalleryIcon },
 ];
 

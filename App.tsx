@@ -3,18 +3,22 @@ import ImageEditor from './components/ImageEditor';
 import ImageGenerator from './components/ImageGenerator';
 import ObjectRemover from './components/ObjectRemover';
 import StyleTransfer from './components/StyleTransfer';
-import ImageUpscaler from './components/ImageUpscaler';
+import PhotoEnhancer from './components/PhotoEnhancer';
 import Gallery from './components/Gallery';
-import Tools from './components/Tools';
 import ProAnalyst from './components/ProAnalyst';
 import Chatbot from './components/Chatbot';
 import Sidebar, { Mode } from './components/Sidebar';
 import Header from './components/Header';
-import BottomNavBar from './components/BottomNavBar';
 import Notification from './components/Notification';
 import InstallPrompt from './components/InstallPrompt';
 import { GalleryProvider } from './contexts/GalleryContext';
 import { ToolChainProvider, useToolChain } from './contexts/ToolChainContext';
+
+// New components for specialized tasks
+import BackgroundRemover from './components/BackgroundRemover';
+import Unblurrer from './components/Unblurrer';
+import Upscaler8K from './components/Upscaler8K';
+import PhotoRestorer from './components/PhotoRestorer';
 
 // PWA Install prompt event type
 interface BeforeInstallPromptEvent extends Event {
@@ -28,7 +32,8 @@ interface BeforeInstallPromptEvent extends Event {
 
 
 const AppContent: React.FC = () => {
-  const [mode, setMode] = useState<Mode>('generate');
+  const [mode, setMode] = useState<Mode>('enhancer');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { chainState, notification } = useToolChain();
   
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
@@ -65,7 +70,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'upscale', 'gallery', 'tools', 'analyst', 'chat'];
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'analyst', 'chat', 'unblur', 'upscale8k', 'restore', 'bg-remover'];
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -78,12 +83,15 @@ const AppContent: React.FC = () => {
       case 'edit': return <ImageEditor />;
       case 'remove': return <ObjectRemover />;
       case 'style': return <StyleTransfer />;
-      case 'upscale': return <ImageUpscaler />;
+      case 'enhancer': return <PhotoEnhancer />;
       case 'gallery': return <Gallery />;
-      case 'tools': return <Tools onModeChange={setMode} />;
       case 'analyst': return <ProAnalyst />;
       case 'chat': return <Chatbot />;
-      default: return <ImageGenerator />;
+      case 'unblur': return <Unblurrer />;
+      case 'upscale8k': return <Upscaler8K />;
+      case 'restore': return <PhotoRestorer />;
+      case 'bg-remover': return <BackgroundRemover />;
+      default: return <PhotoEnhancer />;
     }
   }
 
@@ -92,19 +100,17 @@ const AppContent: React.FC = () => {
         <Sidebar 
             currentMode={mode}
             onModeChange={setMode}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
         />
         <div className="flex-1 flex flex-col md:ml-64">
-            <Header currentMode={mode} />
-            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pt-20 md:pt-8 pb-24 md:pb-8">
+            <Header currentMode={mode} onMenuClick={() => setIsSidebarOpen(true)} />
+            <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 pt-20 md:pt-8 pb-8">
               <div className="transition-opacity duration-300 w-full">
                 {renderContent()}
               </div>
             </main>
         </div>
-        <BottomNavBar
-            currentMode={mode}
-            onModeChange={setMode}
-        />
         <Notification message={notification} />
         <InstallPrompt 
             show={showInstallPrompt} 

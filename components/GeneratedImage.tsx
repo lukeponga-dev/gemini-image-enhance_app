@@ -27,7 +27,7 @@ const actionTools: { id: Mode; label: string; icon: React.FC<{className?: string
     { id: 'edit', label: 'Editor', icon: EditorIcon },
     { id: 'remove', label: 'Object Remover', icon: RemoveIcon },
     { id: 'style', label: 'Style Transfer', icon: StyleIcon },
-    { id: 'upscale', label: 'Enhancer', icon: UpscaleIcon },
+    { id: 'enhancer', label: 'Enhancer', icon: UpscaleIcon },
 ];
 
 const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, context = 'result' }) => {

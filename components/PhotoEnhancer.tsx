@@ -7,7 +7,7 @@ import Spinner from './Spinner';
 import { fileToBase64, dataUrlToFile } from '../utils/imageUtils';
 import { useToolChain } from '../contexts/ToolChainContext';
 
-const ImageUpscaler: React.FC = () => {
+const PhotoEnhancer: React.FC = () => {
   const [originalImage, setOriginalImage] = useState<{ file: File; url: string } | null>(null);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,6 @@ const ImageUpscaler: React.FC = () => {
 
   useEffect(() => {
     const chainedData = consumeChainedImage();
-    // FIX: Changed 'upscale' to 'enhancer' as 'upscale' is not a valid Mode.
     if (chainedData?.targetTool === 'enhancer') {
       const { image } = chainedData;
       const processChainedImage = async () => {
@@ -79,7 +78,7 @@ const ImageUpscaler: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto">
        <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Image Enhancer</h2>
+        <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Photo Enhancer</h2>
         <p className="mt-2 text-lg text-zinc-400">Improve quality, increase resolution, and enhance details automatically.</p>
       </div>
       {!originalImage && (
@@ -166,4 +165,4 @@ const ImageUpscaler: React.FC = () => {
   );
 };
 
-export default ImageUpscaler;
+export default PhotoEnhancer;

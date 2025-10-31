@@ -59,7 +59,6 @@ const ImageEditor: React.FC = () => {
       const { base64, mimeType } = await fileToBase64(originalImage.file);
       const newImageBase64 = await editImage(prompt, base64, mimeType);
       setEditedImage(`data:${mimeType};base64,${newImageBase64}`);
-      // FIX: Added curly braces to the catch block to fix syntax and cascading scope errors.
     } catch (err: any) {
       setError(err.message || 'An unexpected error occurred.');
     } finally {
