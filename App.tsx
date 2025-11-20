@@ -17,8 +17,10 @@ import BackgroundRemover from './components/BackgroundRemover';
 import Unblurrer from './components/Unblurrer';
 import Upscaler8K from './components/Upscaler8K';
 import PhotoRestorer from './components/PhotoRestorer';
-// FIX: Import ProAnalyst to handle the 'analyst' mode.
 import ProAnalyst from './components/ProAnalyst';
+import VideoGenerator from './components/VideoGenerator';
+import ImageAnalyzer from './components/ImageAnalyzer';
+import VideoAnalyzer from './components/VideoAnalyzer';
 
 // PWA Install prompt event type
 interface BeforeInstallPromptEvent extends Event {
@@ -71,8 +73,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      // FIX: Add 'analyst' to the list of valid modes.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'unblur', 'upscale8k', 'restore', 'bg-remover', 'analyst'];
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'unblur', 'upscale8k', 'restore', 'bg-remover', 'analyst', 'video', 'analyze-image', 'analyze-video'];
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -82,6 +83,9 @@ const AppContent: React.FC = () => {
   const renderContent = () => {
     switch (mode) {
       case 'generate': return <ImageGenerator />;
+      case 'video': return <VideoGenerator />;
+      case 'analyze-image': return <ImageAnalyzer />;
+      case 'analyze-video': return <VideoAnalyzer />;
       case 'edit': return <ImageEditor />;
       case 'remove': return <ObjectRemover />;
       case 'style': return <StyleTransfer />;
@@ -90,8 +94,8 @@ const AppContent: React.FC = () => {
       case 'unblur': return <Unblurrer />;
       case 'upscale8k': return <Upscaler8K />;
       case 'restore': return <PhotoRestorer />;
-      // FIX: Add a case to render the ProAnalyst component for the 'analyst' mode.
       case 'analyst': return <ProAnalyst />;
+      case 'bg-remover': return <BackgroundRemover />;
       default: return <PhotoEnhancer />;
     }
   }

@@ -2,12 +2,10 @@ import React from 'react';
 import { 
     GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, GalleryIcon, SparklesIcon, CloseIcon,
     UnblurIcon, Upscale8KIcon, RestoreIcon, BgRemoverIcon, UpscaleIcon,
-    // FIX: Import AnalystIcon to be used for the Pro Analyst tool.
-    AnalystIcon
+    AnalystIcon, VideoIcon, ImageSearchIcon, VideoSearchIcon
 } from './Icons';
 
-// FIX: Add 'analyst' to the Mode type to support the Pro Analyst tool.
-export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'enhancer' | 'gallery' | 'unblur' | 'upscale8k' | 'restore' | 'bg-remover' | 'analyst';
+export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'enhancer' | 'gallery' | 'unblur' | 'upscale8k' | 'restore' | 'bg-remover' | 'analyst' | 'video' | 'analyze-image' | 'analyze-video';
 
 interface Tool {
     id: Mode;
@@ -23,12 +21,14 @@ const mainTools: Tool[] = [
 ];
 
 const aiTools: Tool[] = [
+  { id: 'generate', label: 'Nano Banana Pro', icon: GeneratorIcon },
+  { id: 'video', label: 'Video Creator', icon: VideoIcon },
+  { id: 'analyze-image', label: 'Analyze Image', icon: ImageSearchIcon },
+  { id: 'analyze-video', label: 'Analyze Video', icon: VideoSearchIcon },
   { id: 'bg-remover', label: 'Background Remover', icon: BgRemoverIcon },
   { id: 'remove', label: 'Remove Objects', icon: RemoveIcon },
-  { id: 'generate', label: 'AI Image Generator', icon: GeneratorIcon },
   { id: 'edit', label: 'Manual Editor', icon: EditorIcon },
   { id: 'style', label: 'Style Transfer', icon: StyleIcon },
-  // FIX: Add Pro Analyst to the list of AI tools in the sidebar.
   { id: 'analyst', label: 'Pro Analyst', icon: AnalystIcon },
 ];
 

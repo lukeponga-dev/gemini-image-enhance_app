@@ -2,20 +2,13 @@ import { GoogleGenAI, Modality } from "@google/genai";
 
 // This check is for robustness, assuming process.env.API_KEY is populated by the environment.
 if (!process.env.API_KEY) {
-  // In a real app, you might want to show a message to the user or disable functionality.
-  // For this context, we will throw an error during development if the key is missing.
   console.warn("API_KEY environment variable not set. App will not function correctly.");
 }
 
 export const getAiClient = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-
 /**
  * Edits an image using a text prompt.
- * @param prompt The text prompt describing the edit.
- * @param imageBase64 The base64 encoded string of the image.
- * @param mimeType The MIME type of the image.
- * @returns A promise that resolves to the base64 string of the edited image.
  */
 export const editImage = async (
   prompt: string,
@@ -59,67 +52,137 @@ export const editImage = async (
 };
 
 /**
- * Generates an image from a text prompt.
- * @param prompt The text prompt describing the image to generate.
- * @param aspectRatio The desired aspect ratio for the image.
- * @returns A promise that resolves to the base64 string of the generated image.
+ * Generates an image from a text prompt using Nano Banana Pro (Gemini 3 Pro Image Preview).
  */
 export const generateImage = async (
   prompt: string,
-  aspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9"
+  aspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9" | "2:3" | "3:2" | "21:9",
+  imageSize: "1K" | "2K" | "4K"
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateImages({
-      model: 'imagen-4.0-generate-001',
-      prompt: prompt,
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-pro-image-preview',
+      contents: {
+        parts: [{ text: prompt }],
+      },
       config: {
-        numberOfImages: 1,
-        outputMimeType: 'image/png',
-        aspectRatio: aspectRatio,
+        imageConfig: {
+            aspectRatio: aspectRatio,
+            imageSize: imageSize,
+        },
       },
     });
 
-    if (response.generatedImages && response.generatedImages.length > 0) {
-      const base64ImageBytes = response.generatedImages[0].image.imageBytes;
-      return base64ImageBytes;
+    for (const part of response.candidates[0].content.parts) {
+      // Find the image part, do not assume it is the first part.
+      if (part.inlineData) {
+        return part.inlineData.data;
+      }
     }
     
     throw new Error("No images were generated.");
   } catch (error) {
     console.error("Error generating image:", error);
-    throw new Error("Failed to generate image. The model may not have been able to fulfill the request.");
+    throw new Error("Failed to generate image.");
   }
 };
 
-// FIX: Add getProResponse function for complex text generation.
 /**
- * Generates a response from the pro model for complex queries.
- * @param prompt The text prompt for the model.
- * @returns A promise that resolves to the model's text response.
+ * Generates a video from a text prompt using Veo 3.
+ */
+export const generateVideo = async (
+    prompt: string,
+    aspectRatio: "16:9" | "9:16"
+  ): Promise<string> => {
+    try {
+      const ai = getAiClient();
+      let operation = await ai.models.generateVideos({
+        model: 'veo-3.1-fast-generate-preview',
+        prompt: prompt,
+        config: {
+          numberOfVideos: 1,
+          resolution: '1080p',
+          aspectRatio: aspectRatio,
+        }
+      });
+  
+      // Polling
+      while (!operation.done) {
+        await new Promise(resolve => setTimeout(resolve, 5000)); // 5s interval
+        operation = await ai.operations.getVideosOperation({ operation: operation });
+      }
+  
+      const videoUri = operation.response?.generatedVideos?.[0]?.video?.uri;
+      if (!videoUri) throw new Error("No video URI returned.");
+      
+      // Fetch video bytes. Key must be appended manually for the download link.
+      const response = await fetch(`${videoUri}&key=${process.env.API_KEY}`);
+      const blob = await response.blob();
+      
+      // Convert blob to base64 data URL for display
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+      });
+  
+    } catch (error) {
+      console.error("Error generating video:", error);
+      throw new Error("Failed to generate video.");
+    }
+};
+
+/**
+ * Analyzes media (image or video) using Gemini 3 Pro Preview.
+ */
+export const analyzeMedia = async (
+    prompt: string,
+    mediaData: string,
+    mimeType: string
+): Promise<string> => {
+    try {
+        const ai = getAiClient();
+        const response = await ai.models.generateContent({
+            model: 'gemini-3-pro-preview',
+            contents: {
+                parts: [
+                    { inlineData: { data: mediaData, mimeType: mimeType } },
+                    { text: prompt || "Analyze this content." }
+                ]
+            }
+        });
+        return response.text || "No analysis generated.";
+    } catch (error) {
+        console.error("Error analyzing media:", error);
+        throw new Error("Failed to analyze media.");
+    }
+}
+
+/**
+ * Generates a response from the pro model for complex queries with Thinking Mode.
  */
 export const getProResponse = async (prompt: string): Promise<string> => {
   try {
     const ai = getAiClient();
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-pro',
+      model: 'gemini-3-pro-preview',
       contents: prompt,
+      config: {
+        thinkingConfig: { thinkingBudget: 32768 }
+      }
     });
 
-    return response.text;
+    return response.text || "No response generated.";
   } catch (error) {
     console.error("Error getting pro response:", error);
-    throw new Error("Failed to get response from pro model. The model may not have been able to fulfill the request.");
+    throw new Error("Failed to get response from pro model.");
   }
 };
 
 /**
  * Applies the style of one image to the content of another.
- * @param contentImageBase64 Base64 of the content image.
- * @param contentMimeType Mime type of the content image.
- * @param styleImageBase64 Base64 of the style image.
- * @param styleMimeType Mime type of the style image.
- * @returns A promise that resolves to the base64 string of the new image.
  */
 export const transferStyle = async (
   contentImageBase64: string,
@@ -160,11 +223,6 @@ export type UpscaleStyle = 'balanced' | 'gentle' | 'ultra';
 
 /**
  * Upscales a low-resolution image.
- * @param imageBase64 The base64 encoded string of the image.
- * @param mimeType The MIME type of the image.
- * @param factor The upscaling factor (e.g., 2, 4, 8).
- * @param style The enhancement style to apply.
- * @returns A promise that resolves to the base64 string of the upscaled image.
  */
 export const upscaleImage = async (
   imageBase64: string,
@@ -217,9 +275,6 @@ export const upscaleImage = async (
 
 /**
  * Automatically corrects the colors of an image.
- * @param imageBase64 The base64 encoded string of the image.
- * @param mimeType The MIME type of the image.
- * @returns A promise that resolves to the base64 string of the color-corrected image.
  */
 export const correctColors = async (
   imageBase64: string,

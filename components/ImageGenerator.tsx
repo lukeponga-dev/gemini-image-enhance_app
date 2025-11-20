@@ -4,16 +4,32 @@ import Spinner from './Spinner';
 import Button from './Button';
 import GeneratedImage from './GeneratedImage';
 
-type AspectRatio = "1:1" | "3:4" | "4:3" | "9:16" | "16:9";
+type AspectRatio = "1:1" | "3:4" | "4:3" | "9:16" | "16:9" | "2:3" | "3:2" | "21:9";
+type ImageSize = "1K" | "2K" | "4K";
 
-const aspectRatios: AspectRatio[] = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+const aspectRatios: AspectRatio[] = ["1:1", "16:9", "9:16", "4:3", "3:4", "2:3", "3:2", "21:9"];
+const imageSizes: ImageSize[] = ["1K", "2K", "4K"];
 
 const ImageGenerator: React.FC = () => {
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('1:1');
+  const [imageSize, setImageSize] = useState<ImageSize>('1K');
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const checkApiKey = async () => {
+      if (window.aistudio && window.aistudio.hasSelectedApiKey) {
+          const hasKey = await window.aistudio.hasSelectedApiKey();
+          if (!hasKey && window.aistudio.openSelectKey) {
+             await window.aistudio.openSelectKey();
+             // Re-check after dialog closes
+             return await window.aistudio.hasSelectedApiKey();
+          }
+          return hasKey;
+      }
+      return true; // Assume true if window.aistudio is not present (dev mode)
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,15 +37,33 @@ const ImageGenerator: React.FC = () => {
       setError('Please enter a prompt.');
       return;
     }
-    setIsLoading(true);
+
     setError(null);
+    
+    // Check API Key for High Quality generation
+    try {
+        const hasKey = await checkApiKey();
+        if (!hasKey) {
+            setError("An API key from a paid project is required for this feature. Please select a key.");
+            return;
+        }
+    } catch (e) {
+        console.error("API Key check failed", e);
+    }
+
+    setIsLoading(true);
     setGeneratedImage(null);
 
     try {
-      const imageBase64 = await generateImage(prompt, aspectRatio);
+      const imageBase64 = await generateImage(prompt, aspectRatio, imageSize);
       setGeneratedImage(`data:image/png;base64,${imageBase64}`);
     } catch (err: any) {
-      setError(err.message || 'An unexpected error occurred.');
+      if (err.message && err.message.includes("Requested entity was not found")) {
+           setError("API Key issue detected. Please try selecting your key again.");
+           // Optionally reset key here if we had a method
+      } else {
+           setError(err.message || 'An unexpected error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -38,8 +72,8 @@ const ImageGenerator: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">AI Image Generator</h2>
-        <p className="mt-2 text-lg text-blue-300">Create stunning visuals from simple text descriptions.</p>
+        <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">Nano Banana Pro</h2>
+        <p className="mt-2 text-lg text-blue-300">Generate high-quality images with Gemini 3 Pro.</p>
       </div>
       <div className="bg-blue-900/80 rounded-2xl p-4 sm:p-6 md:p-8 border border-blue-800 shadow-2xl shadow-black/30">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -58,26 +92,48 @@ const ImageGenerator: React.FC = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-blue-200 mb-2">
-              Aspect Ratio
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {aspectRatios.map(ratio => (
-                <button 
-                  key={ratio}
-                  type="button"
-                  onClick={() => setAspectRatio(ratio)}
-                  disabled={isLoading}
-                  title={`Set aspect ratio to ${ratio}`}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-blue-900 transform hover:scale-105 ${
-                      aspectRatio === ratio ? 'bg-gradient-to-r from-rose-600 to-pink-500 text-white shadow-md' : 'bg-blue-700/80 text-blue-200 hover:bg-blue-700'
-                  }`}
-                >
-                  {ratio}
-                </button>
-              ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-blue-200 mb-2">
+                  Aspect Ratio
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {aspectRatios.map(ratio => (
+                    <button 
+                      key={ratio}
+                      type="button"
+                      onClick={() => setAspectRatio(ratio)}
+                      disabled={isLoading}
+                      className={`px-3 py-2 text-xs font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-rose-500 ${
+                          aspectRatio === ratio ? 'bg-rose-600 text-white shadow-md' : 'bg-blue-700/80 text-blue-200 hover:bg-blue-700'
+                      }`}
+                    >
+                      {ratio}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-blue-200 mb-2">
+                  Image Size
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {imageSizes.map(size => (
+                    <button 
+                      key={size}
+                      type="button"
+                      onClick={() => setImageSize(size)}
+                      disabled={isLoading}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 outline-none focus:ring-2 focus:ring-rose-500 ${
+                          imageSize === size ? 'bg-rose-600 text-white shadow-md' : 'bg-blue-700/80 text-blue-200 hover:bg-blue-700'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
           </div>
 
           <div className="text-center pt-2">
@@ -95,8 +151,16 @@ const ImageGenerator: React.FC = () => {
               </div>
           )}
           {error && (
-              <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center">
+              <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-300 text-center w-full">
                   <p><strong>Error:</strong> {error}</p>
+                  {error.includes("API key") && (
+                      <button 
+                        onClick={() => window.aistudio.openSelectKey()}
+                        className="mt-2 text-sm underline text-rose-300 hover:text-rose-200"
+                      >
+                          Select API Key
+                      </button>
+                  )}
               </div>
           )}
           {generatedImage && (
