@@ -4,10 +4,10 @@ import Spinner from './Spinner';
 import Button from './Button';
 import GeneratedImage from './GeneratedImage';
 
-type AspectRatio = "1:1" | "3:4" | "4:3" | "9:16" | "16:9" | "2:3" | "3:2" | "21:9";
+type AspectRatio = "1:1" | "3:4" | "4:3" | "9:16" | "16:9"; // Updated supported aspect ratios
 type ImageSize = "1K" | "2K" | "4K";
 
-const aspectRatios: AspectRatio[] = ["1:1", "16:9", "9:16", "4:3", "3:4", "2:3", "3:2", "21:9"];
+const aspectRatios: AspectRatio[] = ["1:1", "16:9", "9:16", "4:3", "3:4"]; // Updated aspect ratios to match model capabilities
 const imageSizes: ImageSize[] = ["1K", "2K", "4K"];
 
 const ImageGenerator: React.FC = () => {

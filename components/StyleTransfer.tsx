@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { transferStyle } from '../services/geminiService';
 import ImageDropzone from './ImageDropzone';
 import Button from './Button';
@@ -15,29 +15,21 @@ const StyleTransfer: React.FC = () => {
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { consumeChainedImage } = useToolChain();
+  const { chainState, consumeChainedImage } = useToolChain();
   const [isUploading, setIsUploading] = useState<'content' | 'style' | null>(null);
 
+  const contentImageRef = useRef(contentImage);
+  const styleImageRef = useRef(styleImage);
+
   useEffect(() => {
-    const chainedData = consumeChainedImage();
-    if (chainedData?.targetTool === 'style') {
-      const { image } = chainedData;
-      const processChainedImage = async () => {
-        try {
-            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
-            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
-            if (contentImage) URL.revokeObjectURL(contentImage.url);
-            handleImageDrop(file, 'content');
-        } catch (e) {
-            console.error("Failed to process chained image", e);
-            setError("Could not load the image from the previous tool.");
-        }
-      };
-      processChainedImage();
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    contentImageRef.current = contentImage;
+  }, [contentImage]);
+
+  useEffect(() => {
+    styleImageRef.current = styleImage;
+  }, [styleImage]);
   
-  const handleImageDrop = async (file: File, type: 'content' | 'style') => {
+  const handleImageDrop = useCallback(async (file: File, type: 'content' | 'style') => {
     if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
       setError('Invalid file type. Please upload a PNG, JPG, or WEBP image.');
       return;
@@ -52,10 +44,10 @@ const StyleTransfer: React.FC = () => {
       const imageState = { file, url, base64, mimeType };
 
       if (type === 'content') {
-        if (contentImage) URL.revokeObjectURL(contentImage.url);
+        if (contentImageRef.current) URL.revokeObjectURL(contentImageRef.current.url);
         setContentImage(imageState);
       } else {
-        if (styleImage) URL.revokeObjectURL(styleImage.url);
+        if (styleImageRef.current) URL.revokeObjectURL(styleImageRef.current.url);
         setStyleImage(imageState);
       }
     } catch (e) {
@@ -64,7 +56,26 @@ const StyleTransfer: React.FC = () => {
     } finally {
         setIsUploading(null);
     }
-  };
+  }, []); // Empty dependencies, relies on refs
+
+  useEffect(() => {
+    if (chainState && chainState.targetTool === 'style') {
+      const { image } = chainState;
+      const processChainedImage = async () => {
+        try {
+            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
+            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
+            handleImageDrop(file, 'content'); // Always set chained image as content image
+            consumeChainedImage();
+        } catch (e) {
+            console.error("Failed to process chained image", e);
+            setError("Could not load the image from the previous tool.");
+            consumeChainedImage();
+        }
+      };
+      processChainedImage();
+    }
+  }, [chainState, consumeChainedImage, handleImageDrop]); // Dependencies for reacting to chainState
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

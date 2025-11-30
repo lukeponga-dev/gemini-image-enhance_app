@@ -1,4 +1,4 @@
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI, Modality, GenerateContentResponse } from "@google/genai";
 
 // This check is for robustness, assuming process.env.API_KEY is populated by the environment.
 if (!process.env.API_KEY) {
@@ -17,7 +17,7 @@ export const editImage = async (
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
@@ -32,9 +32,7 @@ export const editImage = async (
           },
         ],
       },
-      config: {
-        responseModalities: [Modality.IMAGE],
-      },
+      // responseModalities: [Modality.IMAGE], // Deprecated, model infers modality
     });
 
     for (const part of response.candidates[0].content.parts) {
@@ -56,12 +54,12 @@ export const editImage = async (
  */
 export const generateImage = async (
   prompt: string,
-  aspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9" | "2:3" | "3:2" | "21:9",
+  aspectRatio: "1:1" | "3:4" | "4:3" | "9:16" | "16:9", // Adjusted supported aspect ratios
   imageSize: "1K" | "2K" | "4K"
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-3-pro-image-preview',
       contents: {
         parts: [{ text: prompt }],
@@ -144,7 +142,7 @@ export const analyzeMedia = async (
 ): Promise<string> => {
     try {
         const ai = getAiClient();
-        const response = await ai.models.generateContent({
+        const response: GenerateContentResponse = await ai.models.generateContent({
             model: 'gemini-3-pro-preview',
             contents: {
                 parts: [
@@ -166,7 +164,7 @@ export const analyzeMedia = async (
 export const getProResponse = async (prompt: string): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: prompt,
       config: {
@@ -192,7 +190,7 @@ export const transferStyle = async (
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
@@ -201,9 +199,7 @@ export const transferStyle = async (
           { text: 'Apply the artistic style of the second image to the content of the first image.' },
         ],
       },
-      config: {
-        responseModalities: [Modality.IMAGE],
-      },
+      // responseModalities: [Modality.IMAGE], // Deprecated, model infers modality
     });
 
     for (const part of response.candidates[0].content.parts) {
@@ -247,7 +243,7 @@ export const upscaleImage = async (
         break;
     }
 
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
@@ -255,9 +251,7 @@ export const upscaleImage = async (
           { text: prompt },
         ],
       },
-      config: {
-        responseModalities: [Modality.IMAGE],
-      },
+      // responseModalities: [Modality.IMAGE], // Deprecated, model infers modality
     });
 
     for (const part of response.candidates[0].content.parts) {
@@ -282,7 +276,7 @@ export const correctColors = async (
 ): Promise<string> => {
   try {
     const ai = getAiClient();
-    const response = await ai.models.generateContent({
+    const response: GenerateContentResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
@@ -290,9 +284,7 @@ export const correctColors = async (
           { text: "Automatically correct the colors of this image. Adjust brightness, contrast, saturation, and white balance to make the colors look natural and vibrant. Do not crop or change the composition." },
         ],
       },
-      config: {
-        responseModalities: [Modality.IMAGE],
-      },
+      // responseModalities: [Modality.IMAGE], // Deprecated, model infers modality
     });
 
     for (const part of response.candidates[0].content.parts) {

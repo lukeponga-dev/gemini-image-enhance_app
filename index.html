@@ -1,3 +1,14 @@
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "marked": "https://aistudiocdn.com/marked@^17.0.1",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,75 +36,13 @@
           },
         },
       },
+      plugins: [
+        require('@tailwindcss/typography'),
+      ],
     }
   </script>
-<script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
-    "marked": "https://aistudiocdn.com/marked@^14.0.0"
-  }
-}
-</script>
-<style>
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  .grainy-background {
-    background-color: #172554;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-  }
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-      display: none;
-  }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-  }
-  .prose-custom {
-    color: #dbeafe; /* text-blue-100 */
-  }
-  .prose-custom h1, .prose-custom h2, .prose-custom h3, .prose-custom h4, .prose-custom h5, .prose-custom h6 {
-    color: #eff6ff; /* text-blue-50 */
-  }
-  .prose-custom a {
-    color: #fb7185; /* text-rose-400 */
-  }
-  .prose-custom strong {
-    color: #eff6ff; /* text-blue-50 */
-  }
-  .prose-custom code {
-    color: #eff6ff; /* text-blue-50 */
-    background-color: #1e3a8a; /* bg-blue-800 */
-    padding: 0.2em 0.4em;
-    margin: 0;
-    font-size: 85%;
-    border-radius: 6px;
-  }
-  .prose-custom pre {
-    background-color: #1e40af; /* bg-blue-900 */
-    color: #dbeafe; /* text-blue-100 */
-    border-radius: 0.5rem;
-    padding: 1rem;
-    overflow-x: auto;
-  }
-  .prose-custom pre code {
-    background-color: transparent;
-    padding: 0;
-  }
-  .prose-custom blockquote {
-    border-left-color: #374151; /* border-gray-700 */
-    color: #9ca3af; /* text-gray-400 */
-  }
-</style>
 </head>
-<body class="grainy-background text-white">
+<body class="bg-blue-950">
   <div id="root"></div>
   <script type="module" src="index.tsx"></script>
 </body>

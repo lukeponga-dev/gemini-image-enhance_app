@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useGallery } from '../contexts/GalleryContext';
 import { useToolChain } from '../contexts/ToolChainContext';
 import { Mode } from './Sidebar';
-import { EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon } from './Icons';
+import { EditorIcon, RemoveIcon, StyleIcon, UpscaleIcon, ImageSearchIcon, ChatIcon } from './Icons'; // New: Import ChatIcon
 
 interface GeneratedImageProps {
   src: string;
@@ -28,6 +28,8 @@ const actionTools: { id: Mode; label: string; icon: React.FC<{className?: string
     { id: 'remove', label: 'Object Remover', icon: RemoveIcon },
     { id: 'style', label: 'Style Transfer', icon: StyleIcon },
     { id: 'enhancer', label: 'Enhancer', icon: UpscaleIcon },
+    { id: 'analyze-image', label: 'Analyze', icon: ImageSearchIcon },
+    { id: 'chatbot', label: 'Chatbot', icon: ChatIcon }, // New: Added Chatbot
 ];
 
 const GeneratedImage: React.FC<GeneratedImageProps> = ({ src, alt, prompt, context = 'result' }) => {

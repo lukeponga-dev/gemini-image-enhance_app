@@ -2,10 +2,10 @@ import React from 'react';
 import { 
     GeneratorIcon, EditorIcon, RemoveIcon, StyleIcon, GalleryIcon, SparklesIcon, CloseIcon,
     UnblurIcon, Upscale8KIcon, RestoreIcon, BgRemoverIcon, UpscaleIcon,
-    AnalystIcon, VideoIcon, ImageSearchIcon, VideoSearchIcon
+    AnalystIcon, VideoIcon, ImageSearchIcon, VideoSearchIcon, UploadIcon, ChatIcon
 } from './Icons';
 
-export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'enhancer' | 'gallery' | 'unblur' | 'upscale8k' | 'restore' | 'bg-remover' | 'analyst' | 'video' | 'analyze-image' | 'analyze-video';
+export type Mode = 'generate' | 'edit' | 'remove' | 'style' | 'enhancer' | 'gallery' | 'unblur' | 'upscale8k' | 'restore' | 'bg-remover' | 'analyst' | 'video' | 'analyze-image' | 'analyze-video' | 'initial-upload' | 'chatbot'; // Added 'chatbot'
 
 interface Tool {
     id: Mode;
@@ -14,6 +14,7 @@ interface Tool {
 }
 
 const mainTools: Tool[] = [
+  { id: 'initial-upload', label: 'Start with Image', icon: UploadIcon }, // New entry
   { id: 'enhancer', label: 'Photo Enhancer', icon: UpscaleIcon },
   { id: 'unblur', label: 'Unblur Image', icon: UnblurIcon },
   { id: 'upscale8k', label: 'Upscale to 8K', icon: Upscale8KIcon },
@@ -30,6 +31,7 @@ const aiTools: Tool[] = [
   { id: 'edit', label: 'Manual Editor', icon: EditorIcon },
   { id: 'style', label: 'Style Transfer', icon: StyleIcon },
   { id: 'analyst', label: 'Pro Analyst', icon: AnalystIcon },
+  { id: 'chatbot', label: 'AI Chatbot', icon: ChatIcon }, // New: Added Chatbot
 ];
 
 const appFeatures: Tool[] = [

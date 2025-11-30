@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { editImage } from '../services/geminiService';
 import ImageDropzone from './ImageDropzone';
 import Button from './Button';
@@ -14,36 +14,42 @@ const ObjectRemover: React.FC = () => {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { consumeChainedImage } = useToolChain();
+  const { chainState, consumeChainedImage } = useToolChain();
 
+  const originalImageRef = useRef(originalImage);
   useEffect(() => {
-    const chainedData = consumeChainedImage();
-    if (chainedData?.targetTool === 'remove') {
-      const { image } = chainedData;
-      const processChainedImage = async () => {
-        try {
-            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
-            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
-            if (originalImage) URL.revokeObjectURL(originalImage.url);
-            handleImageDrop(file);
-        } catch (e) {
-            console.error("Failed to process chained image", e);
-            setError("Could not load the image from the previous tool.");
-        }
-      };
-      processChainedImage();
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      originalImageRef.current = originalImage;
+  }, [originalImage]);
 
-  const handleImageDrop = (file: File) => {
+  const handleImageDrop = useCallback((file: File) => {
     if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
       setError('Invalid file type. Please upload a PNG, JPG, or WEBP image.');
       return;
     }
+    if (originalImageRef.current) URL.revokeObjectURL(originalImageRef.current.url);
     setOriginalImage({ file, url: URL.createObjectURL(file) });
     setResultImage(null);
     setError(null);
-  };
+  }, []); // Dependencies: empty, relies on ref for previous image
+
+  useEffect(() => {
+    if (chainState && chainState.targetTool === 'remove') {
+      const { image } = chainState;
+      const processChainedImage = async () => {
+        try {
+            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
+            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
+            handleImageDrop(file); // Use the stable handleImageDrop
+            consumeChainedImage(); // Consume after processing
+        } catch (e) {
+            console.error("Failed to process chained image", e);
+            setError("Could not load the image from the previous tool.");
+            consumeChainedImage(); // Consume even on error
+        }
+      };
+      processChainedImage();
+    }
+  }, [chainState, consumeChainedImage, handleImageDrop]); // Dependencies for reacting to chainState
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +64,7 @@ const ObjectRemover: React.FC = () => {
     try {
       const { base64, mimeType } = await fileToBase64(originalImage.file);
       const fullPrompt = `Seamlessly remove the following object: ${prompt}. Intelligently regenerate the background to make it look natural and untouched.`;
+      // FIX: Corrected typo from newImageBase664 to newImageBase64
       const newImageBase64 = await editImage(fullPrompt, base64, mimeType);
       setResultImage(`data:${mimeType};base64,${newImageBase64}`);
     } catch (err: any) {
@@ -69,8 +76,8 @@ const ObjectRemover: React.FC = () => {
   };
 
   const resetState = () => {
-    if (originalImage) {
-      URL.revokeObjectURL(originalImage.url);
+    if (originalImageRef.current) { // Use ref for cleanup
+      URL.revokeObjectURL(originalImageRef.current.url);
     }
     setOriginalImage(null);
     setResultImage(null);

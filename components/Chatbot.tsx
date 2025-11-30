@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, FormEvent } from 'react';
-import { GoogleGenAI, Chat } from '@google/genai';
+import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
 import { marked } from 'marked';
 import { getAiClient } from '../services/geminiService';
 import { SparklesIcon, ChatIcon } from './Icons';
@@ -51,7 +51,8 @@ const Chatbot: React.FC = () => {
       setMessages(prev => [...prev, newModelMessage]);
 
       for await (const chunk of stream) {
-        const chunkText = chunk.text;
+        const c = chunk as GenerateContentResponse; // Type assertion
+        const chunkText = c.text;
         setMessages(prev => {
           const updatedMessages = [...prev];
           const lastMessage = updatedMessages[updatedMessages.length - 1];
@@ -74,10 +75,10 @@ const Chatbot: React.FC = () => {
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col h-[calc(100vh-12rem)]">
         <div className="text-center mb-6">
-            <h2 className="text-3xl font-extrabold text-zinc-50 tracking-tight">AI Chatbot</h2>
-            <p className="mt-2 text-lg text-zinc-400">Ask me anything! Powered by Gemini.</p>
+            <h2 className="text-3xl font-extrabold text-blue-50 tracking-tight">AI Chatbot</h2>
+            <p className="mt-2 text-lg text-blue-300">Ask me anything! Powered by Gemini.</p>
         </div>
-      <div className="flex-1 bg-zinc-900/80 rounded-2xl p-4 border border-zinc-800 shadow-2xl shadow-black/30 flex flex-col">
+      <div className="flex-1 bg-blue-900/80 rounded-2xl p-4 border border-blue-800 shadow-2xl shadow-black/30 flex flex-col">
         <div className="flex-1 overflow-y-auto pr-2 space-y-4 no-scrollbar">
           {messages.map((msg, index) => (
             <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
@@ -90,17 +91,17 @@ const Chatbot: React.FC = () => {
                 className={`max-w-xl rounded-2xl px-4 py-3 ${
                   msg.role === 'user'
                     ? 'bg-violet-600 text-white rounded-br-none'
-                    : 'bg-zinc-800 text-zinc-200 rounded-bl-none'
+                    : 'bg-blue-800 text-blue-200 rounded-bl-none' // Changed model message background to match app theme
                 }`}
               >
                  <div
-                    className="prose prose-custom max-w-none"
+                    className="prose prose-invert prose-custom max-w-none" // Added prose-invert for dark mode typography
                     dangerouslySetInnerHTML={{ __html: marked.parse(msg.content) as string }}
                  />
               </div>
                 {msg.role === 'user' && (
-                    <div className="flex-shrink-0 bg-zinc-700 p-2 rounded-full mt-1">
-                        <ChatIcon className="w-5 h-5 text-zinc-300" />
+                    <div className="flex-shrink-0 bg-blue-700 p-2 rounded-full mt-1">
+                        <ChatIcon className="w-5 h-5 text-blue-300" />
                     </div>
                 )}
             </div>
@@ -110,11 +111,11 @@ const Chatbot: React.FC = () => {
                     <div className="flex-shrink-0 bg-gradient-to-r from-purple-600 to-violet-500 p-2 rounded-full mt-1">
                         <SparklesIcon className="w-5 h-5 text-white" />
                     </div>
-                    <div className="bg-zinc-800 rounded-2xl rounded-bl-none px-4 py-3">
+                    <div className="bg-blue-800 rounded-2xl rounded-bl-none px-4 py-3">
                         <div className="flex items-center gap-2">
-                            <span className="h-2 w-2 bg-zinc-400 rounded-full animate-pulse [animation-delay:-0.3s]"></span>
-                            <span className="h-2 w-2 bg-zinc-400 rounded-full animate-pulse [animation-delay:-0.15s]"></span>
-                            <span className="h-2 w-2 bg-zinc-400 rounded-full animate-pulse"></span>
+                            <span className="h-2 w-2 bg-blue-400 rounded-full animate-pulse [animation-delay:-0.3s]"></span>
+                            <span className="h-2 w-2 bg-blue-400 rounded-full animate-pulse [animation-delay:-0.15s]"></span>
+                            <span className="h-2 w-2 bg-blue-400 rounded-full animate-pulse"></span>
                         </div>
                     </div>
                 </div>
@@ -132,13 +133,13 @@ const Chatbot: React.FC = () => {
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
             placeholder="Type your message..."
-            className="flex-1 bg-zinc-800 border border-zinc-700 rounded-full py-3 px-5 text-white placeholder-zinc-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition shadow-inner"
+            className="flex-1 bg-blue-800 border border-blue-700 rounded-full py-3 px-5 text-white placeholder-blue-500 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition shadow-inner"
             disabled={isLoading || !chat}
           />
           <button
             type="submit"
             disabled={isLoading || !userInput.trim() || !chat}
-            className="p-3 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full text-white shadow-lg hover:shadow-violet-500/20 disabled:from-zinc-600 disabled:to-zinc-600 disabled:text-zinc-400 disabled:cursor-not-allowed transition-all transform hover:scale-110"
+            className="p-3 bg-gradient-to-r from-purple-600 to-violet-500 rounded-full text-white shadow-lg hover:shadow-violet-500/20 disabled:from-blue-700 disabled:to-blue-600 disabled:text-blue-400 disabled:cursor-not-allowed transition-all transform hover:scale-110" // Changed disabled styles to match app theme
             aria-label="Send message"
             title="Send message"
           >

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { upscaleImage } from '../services/geminiService';
 import ImageDropzone from './ImageDropzone';
 import Button from './Button';
@@ -13,36 +13,42 @@ const Upscaler8K: React.FC = () => {
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { consumeChainedImage } = useToolChain();
+  const { chainState, consumeChainedImage } = useToolChain();
 
+  const originalImageRef = useRef(originalImage);
   useEffect(() => {
-    const chainedData = consumeChainedImage();
-    if (chainedData?.targetTool === 'upscale8k') {
-      const { image } = chainedData;
-      const processChainedImage = async () => {
-        try {
-            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
-            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
-            if (originalImage) URL.revokeObjectURL(originalImage.url);
-            handleImageDrop(file);
-        } catch (e) {
-            console.error("Failed to process chained image", e);
-            setError("Could not load the image from the previous tool.");
-        }
-      };
-      processChainedImage();
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+      originalImageRef.current = originalImage;
+  }, [originalImage]);
 
-  const handleImageDrop = (file: File) => {
+  const handleImageDrop = useCallback((file: File) => {
     if (!['image/png', 'image/jpeg', 'image/webp'].includes(file.type)) {
       setError('Invalid file type. Please upload a PNG, JPG, or WEBP image.');
       return;
     }
+    if (originalImageRef.current) URL.revokeObjectURL(originalImageRef.current.url);
     setOriginalImage({ file, url: URL.createObjectURL(file) });
     setResultImage(null);
     setError(null);
-  };
+  }, []); // Dependencies: empty, relies on ref for previous image
+
+  useEffect(() => {
+    if (chainState && chainState.targetTool === 'upscale8k') {
+      const { image } = chainState;
+      const processChainedImage = async () => {
+        try {
+            const fileName = image.prompt.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 50) || 'chained-image';
+            const file = await dataUrlToFile(image.dataUrl, `${fileName}.png`);
+            handleImageDrop(file); // Use the stable handleImageDrop
+            consumeChainedImage();
+        } catch (e) {
+            console.error("Failed to process chained image", e);
+            setError("Could not load the image from the previous tool.");
+            consumeChainedImage();
+        }
+      };
+      processChainedImage();
+    }
+  }, [chainState, consumeChainedImage, handleImageDrop]); // Dependencies for reacting to chainState
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,8 +72,8 @@ const Upscaler8K: React.FC = () => {
   };
 
   const resetState = () => {
-    if (originalImage) {
-      URL.revokeObjectURL(originalImage.url);
+    if (originalImageRef.current) { // Use ref for cleanup
+      URL.revokeObjectURL(originalImageRef.current.url);
     }
     setOriginalImage(null);
     setResultImage(null);

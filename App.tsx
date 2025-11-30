@@ -21,6 +21,8 @@ import ProAnalyst from './components/ProAnalyst';
 import VideoGenerator from './components/VideoGenerator';
 import ImageAnalyzer from './components/ImageAnalyzer';
 import VideoAnalyzer from './components/VideoAnalyzer';
+import InitialImageUploader from './components/InitialImageUploader';
+import Chatbot from './components/Chatbot'; // New: Import Chatbot
 
 // PWA Install prompt event type
 interface BeforeInstallPromptEvent extends Event {
@@ -34,7 +36,7 @@ interface BeforeInstallPromptEvent extends Event {
 
 
 const AppContent: React.FC = () => {
-  const [mode, setMode] = useState<Mode>('enhancer');
+  const [mode, setMode] = useState<Mode>('initial-upload'); // Default mode set to initial-upload
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { chainState, notification: toolChainNotification } = useToolChain();
   const { galleryNotification } = useGallery();
@@ -73,7 +75,7 @@ const AppContent: React.FC = () => {
   useEffect(() => {
     if (chainState) {
       // Ensure the target tool from the chain is a valid mode.
-      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'unblur', 'upscale8k', 'restore', 'bg-remover', 'analyst', 'video', 'analyze-image', 'analyze-video'];
+      const validModes: Mode[] = ['generate', 'edit', 'remove', 'style', 'enhancer', 'gallery', 'unblur', 'upscale8k', 'restore', 'bg-remover', 'analyst', 'video', 'analyze-image', 'analyze-video', 'initial-upload', 'chatbot']; // New: Add 'chatbot' to valid modes
       if(validModes.includes(chainState.targetTool as Mode)) {
         setMode(chainState.targetTool as Mode);
       }
@@ -82,6 +84,7 @@ const AppContent: React.FC = () => {
 
   const renderContent = () => {
     switch (mode) {
+      case 'initial-upload': return <InitialImageUploader />;
       case 'generate': return <ImageGenerator />;
       case 'video': return <VideoGenerator />;
       case 'analyze-image': return <ImageAnalyzer />;
@@ -96,7 +99,8 @@ const AppContent: React.FC = () => {
       case 'restore': return <PhotoRestorer />;
       case 'analyst': return <ProAnalyst />;
       case 'bg-remover': return <BackgroundRemover />;
-      default: return <PhotoEnhancer />;
+      case 'chatbot': return <Chatbot />; // New: Case for Chatbot
+      default: return <InitialImageUploader />; // Default to the new uploader for a better entry point
     }
   }
 
